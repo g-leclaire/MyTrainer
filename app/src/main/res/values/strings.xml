@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">MyTrainer</string>
     <string name="action_settings">Settings</string>
-    <string name="edit_message">Tu pues.</string>
+    <string name="edit_message">Default text...</string>
     <string name="button_send">enweille</string>
     <string name="title_activity_display_message">MyMessage</string>
 </resources>

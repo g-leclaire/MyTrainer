@@ -1,5 +1,9 @@
 package com.geoff.mytrainer;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -26,6 +30,8 @@ public class DisplayMessageActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
+                FireMissilesDialogFragment fragment = new FireMissilesDialogFragment();
+                fragment.show(getFragmentManager(), "trt");
             }
         });
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -40,7 +46,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
         layout.addView(textView);
 
-        new CountDownTimer(30000, 1000) {
+        CountDownTimer timer = new CountDownTimer(30000, 1000) {
 
             public void onTick(long millisUntilFinished) {
                 textView.setText("" + millisUntilFinished / 1000);
@@ -52,4 +58,15 @@ public class DisplayMessageActivity extends AppCompatActivity {
         }.start();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        final TextView textView = new TextView(this);
+        textView.setTextSize(89);
+        textView.setText("test");
+        RelativeLayout layout = (RelativeLayout) findViewById(R.id.content);
+        layout.addView(textView);
+    }
 }
+
