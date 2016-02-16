@@ -1,7 +1,11 @@
 <resources>
     <string name="app_name">MyTrainer</string>
     <string name="action_settings">Settings</string>
-    <string name="edit_message">Default text...</string>
+    <string name="edit_message">Sets</string>
     <string name="button_send">enweille</string>
     <string name="title_activity_display_message">MyMessage</string>
+    <string name="reps">Reps</string>
+    <string name="exercise">Exercise</string>
+    <string name="weight">Weight</string>
+    <string name="rest">Rest</string>
 </resources>

@@ -14,23 +14,154 @@
     tools:showIn="@layout/activity_main"
     tools:context="com.geoff.mytrainer.MainActivity">
 
-    <TextView
-        android:text="Hello World!"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
 
-    <EditText
-        android:id="@+id/edit_message"
-        android:layout_width="0dp"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/edit_message"
-        android:layout_weight="1" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/button_send"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/button_send"
-        android:onClick="sendMessage"/>
+        <TextView
+            android:text="Workout 1"
+            android:textSize="30sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp" >
+
+            <EditText
+                android:id="@+id/exercis1e"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/exercise"
+                android:layout_weight="2" />
+
+            <EditText
+                android:id="@+id/weight1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/weight"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/reps1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/reps"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edit_message1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_message"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/rest1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/rest"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp" >
+
+            <EditText
+                android:id="@+id/exercise2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/exercise"
+                android:layout_weight="2" />
+
+            <EditText
+                android:id="@+id/weight2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/weight"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/reps2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/reps"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edit_message2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_message"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/rest2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/rest"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="15dp" >
+
+            <EditText
+                android:id="@+id/exercise3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/exercise"
+                android:layout_weight="2" />
+
+            <EditText
+                android:id="@+id/weight3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/weight"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/reps3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/reps"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/edit_message3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/edit_message"
+                android:layout_weight="1" />
+
+            <EditText
+                android:id="@+id/rest3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="@string/rest"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/button_send"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="START"
+            android:onClick="sendMessage" />
+
+    </LinearLayout>
 
 </LinearLayout>
