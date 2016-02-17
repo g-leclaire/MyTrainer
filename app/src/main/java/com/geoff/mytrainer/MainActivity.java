@@ -60,9 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
     public void sendMessage(View view) {
         Intent intent = new Intent(this, DisplayMessageActivity.class);
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-        intent.putExtra(EXTRA_MESSAGE, message);
+
+        intent.putExtra("exerciseName", ((EditText) findViewById(R.id.exercise1)).getText().toString());
+        intent.putExtra("exerciseReps", ((EditText) findViewById(R.id.reps1)).getText().toString());
+        intent.putExtra("exerciseWeight", ((EditText) findViewById(R.id.weight1)).getText().toString());
+        intent.putExtra("exerciseRest", ((EditText) findViewById(R.id.rest1)).getText().toString());
+
         startActivity(intent);
     }
 }
