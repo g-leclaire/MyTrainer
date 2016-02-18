@@ -18,15 +18,15 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class DisplayMessageActivity extends AppCompatActivity {
+public class RestActivity extends AppCompatActivity {
 
-    public DisplayMessageActivity() {
-        countDownTimer = null;
+    public RestActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_display_message);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -41,7 +41,7 @@ public class DisplayMessageActivity extends AppCompatActivity {
         exerciseReps.setText(extras.getString("exerciseReps"));
 
         // Timer text.
-        final TextView timer = (TextView) findViewById(R.id.timer);
+        final TextView timerText = (TextView) findViewById(R.id.timer);
 
         // Testing shared preferences.
         SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
@@ -50,27 +50,40 @@ public class DisplayMessageActivity extends AppCompatActivity {
         editor.apply();
         int time = sharedPref.getInt("testKey", 10000);
 
+        String secsDurationRaw = extras.getString("exerciseRest");
+        long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
+
         // Create a new timer with the exercise rest.
-        countDownTimer = new CountDownTimer(Long.parseLong(extras.getString("exerciseRest")) * 1000, 10) {
+        restTimer = new RestTimer(msDuration, timerText);
+        /*countDownTimer = new CountDownTimer(Long.parseLong(extras.getString("exerciseRest")) * 1000, 10) {
 
             public void onTick(long millisUntilFinished) {
                 long seconds = millisUntilFinished / 1000;
                 long tenths = (millisUntilFinished - 1000*seconds) / 10;
                 long minutes = seconds / 60;
-                long correctedSeconds = seconds % 60; // We want seconds to be between 0 and 60.
+                long correctedSeconds = seconds % 60; // We want seconds to be between 0 and 59.
                 timer.setText(String.format("%01d", minutes) + ":" + String.format("%02d", correctedSeconds) + ":" + String.format("%02d", tenths));
             }
 
             public void onFinish() {
                 timer.setText("Go!");
             }
-        };
+        };*/
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-        countDownTimer.start();
+
+        restTimer.start();
+
+        Bundle extras = getIntent().getExtras();
+        final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
+        final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
+        final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
+        exerciseName.setText(extras.getString("exerciseName"));
+        exerciseWeight.setText(extras.getString("exerciseWeight"));
+        exerciseReps.setText(extras.getString("exerciseReps"));
     }
 
     @Override
@@ -89,11 +102,12 @@ public class DisplayMessageActivity extends AppCompatActivity {
     }
 
     public void skipTimer(View view) {
-        if(countDownTimer != null)
-            countDownTimer.cancel();
+        restTimer.cancel();
         ((TextView) findViewById(R.id.timer)).setText("Go!");
     }
 
-    CountDownTimer countDownTimer;
+    //CountDownTimer countDownTimer;
+    private RestTimer restTimer;
+    private final int nbExercises = 3;
 }
 

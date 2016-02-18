@@ -38,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/exercise"
+                android:text="Bench Press"
                 android:layout_weight="2" />
 
             <EditText
@@ -46,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/weight"
+                android:text="120"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -55,6 +57,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/reps"
+                android:text="8"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -64,6 +67,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/edit_message"
+                android:text="3"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -73,6 +77,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/rest"
+                android:text="70"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -90,6 +95,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/exercise"
+                android:text="Squat"
                 android:layout_weight="2" />
 
             <EditText
@@ -98,6 +104,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/weight"
+                android:text="150"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -107,6 +114,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/reps"
+                android:text="5"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -116,6 +124,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/edit_message"
+                android:text="3"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -125,6 +134,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/rest"
+                android:text="80"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -141,6 +151,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/exercise"
+                android:text="Row"
                 android:layout_weight="2" />
 
             <EditText
@@ -149,6 +160,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/weight"
+                android:text="95"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -158,6 +170,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/reps"
+                android:text="8"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -167,6 +180,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/edit_message"
+                android:text="2"
                 android:inputType="number"
                 android:layout_weight="1" />
 
@@ -176,6 +190,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="15sp"
                 android:hint="@string/rest"
+                android:text="70"
                 android:inputType="number"
                 android:layout_weight="1" />
 

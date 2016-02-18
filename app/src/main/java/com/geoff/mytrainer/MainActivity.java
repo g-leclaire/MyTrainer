@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void sendMessage(View view) {
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
+        Intent intent = new Intent(this, RestActivity.class);
 
         intent.putExtra("exerciseName", ((EditText) findViewById(R.id.exercise1)).getText().toString());
         intent.putExtra("exerciseReps", ((EditText) findViewById(R.id.reps1)).getText().toString());
