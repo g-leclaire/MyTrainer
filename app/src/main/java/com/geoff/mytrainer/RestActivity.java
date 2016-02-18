@@ -55,20 +55,6 @@ public class RestActivity extends AppCompatActivity {
 
         // Create a new timer with the exercise rest.
         restTimer = new RestTimer(msDuration, timerText);
-        /*countDownTimer = new CountDownTimer(Long.parseLong(extras.getString("exerciseRest")) * 1000, 10) {
-
-            public void onTick(long millisUntilFinished) {
-                long seconds = millisUntilFinished / 1000;
-                long tenths = (millisUntilFinished - 1000*seconds) / 10;
-                long minutes = seconds / 60;
-                long correctedSeconds = seconds % 60; // We want seconds to be between 0 and 59.
-                timer.setText(String.format("%01d", minutes) + ":" + String.format("%02d", correctedSeconds) + ":" + String.format("%02d", tenths));
-            }
-
-            public void onFinish() {
-                timer.setText("Go!");
-            }
-        };*/
     }
 
     @Override

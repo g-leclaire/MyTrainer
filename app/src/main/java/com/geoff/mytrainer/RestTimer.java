@@ -39,11 +39,6 @@ public class RestTimer {
     }
 
     private void tick(long msRemaining) {
-        //long seconds = millisUntilFinished / 1000;
-        //long tenths = (millisUntilFinished - 1000*seconds) / 10;
-        //long minutes = seconds / 60;
-        //long correctedSeconds = seconds % 60; // We want seconds to be between 0 and 59.
-        if (timerText != null)
             timerText.setText(formatMinutes(msRemaining) + ":" + formatSeconds(msRemaining) + ":" + formatTenths(msRemaining));
     }
 

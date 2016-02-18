@@ -9,7 +9,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
@@ -34,6 +44,15 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+
+        //String[] array = {"Squat", "Bench Press", "Dead Lift"};
+        final UsState[] states = UsState.values();
+        final ListAdapter listAdapter = createListAdapter(states);
+
+        ListView listView = (ListView) findViewById(R.id.listview);
+        listView.setAdapter(listAdapter);
+
+
     }
 
     @Override
@@ -67,5 +86,52 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("exerciseRest", ((EditText) findViewById(R.id.rest1)).getText().toString());
 
         startActivity(intent);
+    }
+
+    public enum UsState {
+        Squat("3 x 8 x 150 lb"),
+        BenchPress("3 x 8 x 120 lb"),
+        DeadLift("3 x 8 x 130 lb");
+
+        private String stateName;
+
+        UsState(final String name) {
+            this.stateName = name;
+        }
+
+        public String getStateName() {
+            return this.stateName;
+        }
+
+        public String getAbbreviation() {
+            return this.name();
+        }
+
+    }
+
+    private static final String TEXT1 = "text1";
+    private static final String TEXT2 = "text2";
+
+    private List<Map<String, String>> convertToListItems(final UsState[] states) {
+        final List<Map<String, String>> listItem =
+                new ArrayList<Map<String, String>>(states.length);
+
+        for (final UsState state: states) {
+            final Map<String, String> listItemMap = new HashMap<String, String>();
+            listItemMap.put(TEXT1, state.getStateName());
+            listItemMap.put(TEXT2, state.getAbbreviation());
+            listItem.add(Collections.unmodifiableMap(listItemMap));
+        }
+        return Collections.unmodifiableList(listItem);
+    }
+
+    private ListAdapter createListAdapter(final UsState[] states) {
+        final String[] fromMapKey = new String[] {TEXT1, TEXT2};
+        final int[] toLayoutId = new int[] {android.R.id.text2, android.R.id.text1};
+        final List<Map<String, String>> list = convertToListItems(states);
+
+        return new SimpleAdapter(this, list,
+                android.R.layout.simple_list_item_2,
+                fromMapKey, toLayoutId);
     }
 }
