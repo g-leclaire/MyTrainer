@@ -35,49 +35,39 @@ public class RestActivity extends TimerActivity{
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Retrieve exercise info.
+        // Not used anymore.
         Bundle extras = getIntent().getExtras();
-        final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
-        final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
-        final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
-        exerciseName.setText(extras.getString("exerciseName"));
-        exerciseWeight.setText(extras.getString("exerciseWeight"));
-        exerciseReps.setText(extras.getString("exerciseReps"));
 
-        // Timer text.
-        final TextView timerText = (TextView) findViewById(R.id.timer);
-
-        // Testing shared preferences.
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        //SharedPreferences.Editor editor = sharedPref.edit();
-        //editor.putInt("testKey", 42);
-        //editor.putInt("test", 69);
-        //editor.apply();
-        //int time = sharedPref.getInt("testKey", -1);
 
-        String[] rests = sharedPref.getString("rests", "error").split(",");
-        //String secsDurationRaw = extras.getString("exerciseRest");
+        // Retrieve and set exercises info.
+        final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
+        exercises = sharedPref.getString("exercises", "error").split(",");
+        exerciseName.setText(exercises[0]);
+        nbExercises = exercises.length;
+
+        final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
+        weights = sharedPref.getString("weights", "error").split(",");
+        exerciseWeight.setText(weights[0]);
+
+        final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
+        reps = sharedPref.getString("reps", "error").split(",");
+        exerciseReps.setText(reps[0]);
+
+        rests = sharedPref.getString("rests", "error").split(",");
         String secsDurationRaw = rests[0];
         long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
-        // Create a new timer with the exercise rest.
-        //restTimer = new RestTimer(msDuration, timerText);
-
+        // Start the timer.
+        final TextView timerText = (TextView) findViewById(R.id.timer);
         restTimer = new RestTimer(this, msDuration, timerText);
-
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-
+        // Not used anymore.
         Bundle extras = getIntent().getExtras();
-        final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
-        final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
-        final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
-        exerciseName.setText(extras.getString("exerciseName"));
-        exerciseWeight.setText(extras.getString("exerciseWeight"));
-        exerciseReps.setText(extras.getString("exerciseReps"));
 
         restTimer.start();
     }
@@ -107,7 +97,11 @@ public class RestActivity extends TimerActivity{
 
     //CountDownTimer countDownTimer;
     private RestTimer restTimer;
-    private Object syncToken;
-    private final int nbExercises = 3;
+    private String[] exercises;
+    private String[] weights;
+    private String[] reps;
+    private String[] sets;
+    private String[] rests;
+    private int nbExercises;
 }
 

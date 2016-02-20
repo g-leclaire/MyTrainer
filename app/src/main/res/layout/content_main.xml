@@ -42,63 +42,6 @@
 
         </LinearLayout>
 
-        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="15dp" >
-
-            <EditText
-                android:id="@+id/exercise1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="@string/exercise"
-                android:text="Bench Press"
-                android:layout_weight="2" />
-
-            <EditText
-                android:id="@+id/weight1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="@string/weight"
-                android:text="120"
-                android:inputType="number"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/reps1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="@string/reps"
-                android:text="8"
-                android:inputType="number"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/edit_message1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="@string/edit_message"
-                android:text="3"
-                android:inputType="number"
-                android:layout_weight="1" />
-
-            <EditText
-                android:id="@+id/rest1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:hint="@string/rest"
-                android:text="70"
-                android:inputType="number"
-                android:layout_weight="1" />
-
-        </LinearLayout>
-
        <!-- <ListView
             android:id="@+id/listview"
             android:layout_width="match_parent"
