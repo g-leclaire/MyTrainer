@@ -18,7 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-public class RestActivity extends AppCompatActivity {
+import java.io.Console;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+
+public class RestActivity extends AppCompatActivity{
 
     public RestActivity() {
     }
@@ -44,13 +48,16 @@ public class RestActivity extends AppCompatActivity {
         final TextView timerText = (TextView) findViewById(R.id.timer);
 
         // Testing shared preferences.
-        SharedPreferences sharedPref = getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putInt("testKey", 12000);
-        editor.apply();
-        int time = sharedPref.getInt("testKey", 10000);
+        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        //SharedPreferences.Editor editor = sharedPref.edit();
+        //editor.putInt("testKey", 42);
+        //editor.putInt("test", 69);
+        //editor.apply();
+        //int time = sharedPref.getInt("testKey", -1);
 
-        String secsDurationRaw = extras.getString("exerciseRest");
+        String[] rests = sharedPref.getString("rests", "error").split(",");
+        //String secsDurationRaw = extras.getString("exerciseRest");
+        String secsDurationRaw = rests[0];
         long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
         // Create a new timer with the exercise rest.
@@ -70,6 +77,7 @@ public class RestActivity extends AppCompatActivity {
         exerciseName.setText(extras.getString("exerciseName"));
         exerciseWeight.setText(extras.getString("exerciseWeight"));
         exerciseReps.setText(extras.getString("exerciseReps"));
+
     }
 
     @Override
@@ -88,8 +96,7 @@ public class RestActivity extends AppCompatActivity {
     }
 
     public void skipTimer(View view) {
-        restTimer.cancel();
-        ((TextView) findViewById(R.id.timer)).setText("Go!");
+        restTimer.stop();
     }
 
     //CountDownTimer countDownTimer;

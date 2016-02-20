@@ -21,6 +21,11 @@ public class RestTimer {
         countDownTimer.cancel();
     }
 
+    public void stop() {
+        countDownTimer.cancel();
+        finish();
+    }
+
     public void start() {
         countDownTimer.start();
     }
@@ -36,6 +41,7 @@ public class RestTimer {
 
     private void finish() {
         timerText.setText("Go!");
+        notify();
     }
 
     private void tick(long msRemaining) {

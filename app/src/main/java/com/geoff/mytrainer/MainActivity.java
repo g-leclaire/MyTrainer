@@ -1,28 +1,49 @@
 package com.geoff.mytrainer;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
+
+    public static final String[] titles = new String[] { "Squat",
+            "Bench press", "Deadlift" };
+
+    public static final String[] descriptions = new String[] {
+            "3 x 8 x 150 lb",
+            "3 x 8 x 120 lb",
+            "3 x 8 x 130 lb"
+    };
+
+    public static final Integer[] images = { R.drawable.untitled,
+            R.drawable.untitled, R.drawable.untitled, R.drawable.untitled };
+
+    ListView listView;
+    List<RowItem> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,13 +67,44 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //String[] array = {"Squat", "Bench Press", "Dead Lift"};
-        final UsState[] states = UsState.values();
+        /*final UsState[] states = UsState.values();
         final ListAdapter listAdapter = createListAdapter(states);
 
         ListView listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(listAdapter);
+        listView.setAdapter(listAdapter);*/
+
+        rowItems = new ArrayList<RowItem>();
+        for (int i = 0; i < titles.length; i++) {
+            RowItem item = new RowItem(images[i], titles[i], descriptions[i]);
+            rowItems.add(item);
+        }
+
+        listView = (ListView) findViewById(R.id.list);
+        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+                R.layout.list_item, rowItems);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
 
 
+
+
+        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString("exercises", "Squat,Bench Press,Deadlift");
+        editor.putString("sets", "2,2,3");
+        editor.putString("reps", "8,9,8");
+        editor.putString("weights", "150,120,130");
+        editor.putString("rests", "30,60,90");
+        editor.apply();
+    }
+
+    public void onItemClick(AdapterView<?> parent, View view, int position,
+                            long id) {
+        Toast toast = Toast.makeText(getApplicationContext(),
+                "Item " + (position + 1) + ": " + rowItems.get(position),
+                Toast.LENGTH_SHORT);
+        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.show();
     }
 
     @Override
