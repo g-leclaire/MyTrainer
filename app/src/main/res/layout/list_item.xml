@@ -15,6 +15,7 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:paddingBottom="10dp"
         android:textColor="#000000"
         android:textSize="16dp" />
@@ -27,4 +28,15 @@
         android:paddingLeft="10dp"
         android:textColor="#3399FF"
         android:textSize="14dp" />
+
+    <Button
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/toolbar"
+        android:layout_toRightOf="@+id/title"
+        android:layout_alignParentRight="true"
+        android:id="@+id/icon"
+        android:drawableTop="@android:drawable/ic_menu_edit"/>
+
 </RelativeLayout>

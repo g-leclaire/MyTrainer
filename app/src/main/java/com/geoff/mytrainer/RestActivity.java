@@ -13,8 +13,12 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -38,6 +42,15 @@ public class RestActivity extends TimerActivity{
         // Not used anymore.
         Bundle extras = getIntent().getExtras();
 
+        // Set the reps picker properties.
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        //repsPicker.setHorizontalGravity(Gravity.CENTER);
+        repsPicker.setMaxValue(20);
+        repsPicker.setMinValue(0);
+        repsPicker.setValue(8);
+        repsPicker.setWrapSelectorWheel(false);
+        //numberPicker.setOnValueChangedListener(this);
+
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
 
         // Retrieve and set exercises info.
@@ -59,7 +72,7 @@ public class RestActivity extends TimerActivity{
         long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
         // Start the timer.
-        final TextView timerText = (TextView) findViewById(R.id.timer);
+        final TextView timerText = (TextView) findViewById(R.id.timer_text);
         restTimer = new RestTimer(this, msDuration, timerText);
     }
 
@@ -73,7 +86,30 @@ public class RestActivity extends TimerActivity{
     }
 
     public void timerFinished() {
-        ((TextView) findViewById(R.id.timer)).setText("Timer finished.");
+        ((TextView) findViewById(R.id.timer_text)).setText("Timer finished.");
+        nextExercise();
+    }
+
+    private void nextExercise() {
+        if(currentExercise < nbExercises)
+        {
+            //restTimer.restart(Long.parseLong(rests[currentExercise++]) * 1000);
+            TextView timerText = (TextView) findViewById(R.id.timer_text);
+            timerText.setVisibility(View.GONE);
+
+            NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+            repsPicker.setVisibility(View.VISIBLE);
+
+            Button skipButton = (Button) findViewById(R.id.button_skip);
+            skipButton.setVisibility(View.GONE);
+
+            Button nextButton = (Button) findViewById(R.id.button_next);
+            skipButton.setVisibility(View.VISIBLE);
+
+
+        }
+        else
+            finish();
     }
 
     @Override
@@ -103,5 +139,6 @@ public class RestActivity extends TimerActivity{
     private String[] sets;
     private String[] rests;
     private int nbExercises;
+    private int currentExercise;
 }
 
