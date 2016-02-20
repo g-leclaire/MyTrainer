@@ -22,7 +22,7 @@ import java.io.Console;
 import java.util.HashSet;
 import java.util.LinkedHashSet;
 
-public class RestActivity extends AppCompatActivity{
+public class RestActivity extends TimerActivity{
 
     public RestActivity() {
     }
@@ -61,14 +61,15 @@ public class RestActivity extends AppCompatActivity{
         long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
         // Create a new timer with the exercise rest.
-        restTimer = new RestTimer(msDuration, timerText);
+        //restTimer = new RestTimer(msDuration, timerText);
+
+        restTimer = new RestTimer(this, msDuration, timerText);
+
     }
 
     @Override
     public void onResume() {
         super.onResume();  // Always call the superclass method first
-
-        restTimer.start();
 
         Bundle extras = getIntent().getExtras();
         final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
@@ -78,6 +79,11 @@ public class RestActivity extends AppCompatActivity{
         exerciseWeight.setText(extras.getString("exerciseWeight"));
         exerciseReps.setText(extras.getString("exerciseReps"));
 
+        restTimer.start();
+    }
+
+    public void timerFinished() {
+        ((TextView) findViewById(R.id.timer)).setText("Timer finished.");
     }
 
     @Override
@@ -96,11 +102,12 @@ public class RestActivity extends AppCompatActivity{
     }
 
     public void skipTimer(View view) {
-        restTimer.stop();
+        restTimer.complete();
     }
 
     //CountDownTimer countDownTimer;
     private RestTimer restTimer;
+    private Object syncToken;
     private final int nbExercises = 3;
 }
 

@@ -39,8 +39,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             "3 x 8 x 130 lb"
     };
 
-    public static final Integer[] images = { R.drawable.untitled,
-            R.drawable.untitled, R.drawable.untitled, R.drawable.untitled };
+    public static final Integer[] images = { 0,0,0 };
 
     ListView listView;
     List<RowItem> rowItems;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         ListView listView = (ListView) findViewById(R.id.listview);
         listView.setAdapter(listAdapter);*/
 
-        rowItems = new ArrayList<RowItem>();
+        rowItems = new ArrayList<>();
         for (int i = 0; i < titles.length; i++) {
             RowItem item = new RowItem(images[i], titles[i], descriptions[i]);
             rowItems.add(item);
@@ -166,16 +165,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     private List<Map<String, String>> convertToListItems(final UsState[] states) {
         final List<Map<String, String>> listItem =
-                new ArrayList<Map<String, String>>(states.length);
+                new ArrayList<>(states.length);
 
         for (final UsState state: states) {
-            final Map<String, String> listItemMap = new HashMap<String, String>();
+            final Map<String, String> listItemMap = new HashMap<>();
             listItemMap.put(TEXT1, state.getStateName());
             listItemMap.put(TEXT2, state.getAbbreviation());
             listItem.add(Collections.unmodifiableMap(listItemMap));
         }
         return Collections.unmodifiableList(listItem);
     }
+    final List<Map<String, String>> list = new ArrayList<>(3);
+
+
 
     private ListAdapter createListAdapter(final UsState[] states) {
         final String[] fromMapKey = new String[] {TEXT1, TEXT2};

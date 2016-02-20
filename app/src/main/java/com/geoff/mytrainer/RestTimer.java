@@ -8,12 +8,15 @@ public class RestTimer {
     public RestTimer(long msDuration) {
         this.timerText = null;
         this.msTotalDuration = msDuration;
+        this.isRunning = false;
         createTimer(0);
     }
 
-    public RestTimer(long msDuration, final TextView timerText) {
-        this.timerText = timerText;
+    public RestTimer(TimerActivity timerActivity, long msDuration, final TextView timerText) {
+        this.timerActivity = timerActivity;
         this.msTotalDuration = msDuration;
+        this.timerText = timerText;
+        this.isRunning = false;
         createTimer(msDuration);
     }
 
@@ -21,13 +24,14 @@ public class RestTimer {
         countDownTimer.cancel();
     }
 
-    public void stop() {
+    public void complete() {
         countDownTimer.cancel();
         finish();
     }
 
     public void start() {
         countDownTimer.start();
+        isRunning = true;
     }
 
     public void restart() {
@@ -40,8 +44,8 @@ public class RestTimer {
     }
 
     private void finish() {
-        timerText.setText("Go!");
-        notify();
+        isRunning = false;
+        timerActivity.timerFinished();
     }
 
     private void tick(long msRemaining) {
@@ -67,6 +71,8 @@ public class RestTimer {
         return String.format("%01d", msRemaining / 1000 / 60);
     }
 
+    TimerActivity timerActivity;
+    private boolean isRunning;
     private CountDownTimer countDownTimer;
     private long msTotalDuration;
     private TextView timerText;
