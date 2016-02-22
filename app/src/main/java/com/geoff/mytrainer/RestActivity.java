@@ -28,7 +28,20 @@ import java.util.LinkedHashSet;
 
 public class RestActivity extends TimerActivity{
 
+    private RestTimer restTimer;
+    private String[] exercises;
+    private String[] weights;
+    private String[] reps;
+    private String[] sets;
+    private String[] rests;
+    private int nbExercises;
+    private int currentExercise;
+    private int currentSet;
+
     public RestActivity() {
+        nbExercises = 0;
+        currentExercise = 0;
+        currentSet = 1;
     }
 
     @Override
@@ -54,26 +67,14 @@ public class RestActivity extends TimerActivity{
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
 
         // Retrieve and set exercises info.
-        final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
-        exercises = sharedPref.getString("exercises", "error").split(",");
-        exerciseName.setText(exercises[0]);
+        exercises = sharedPref.getString("exercises", "error,").split(",");
+        weights = sharedPref.getString("weights", "error,").split(",");
+        reps = sharedPref.getString("reps", "error,").split(",");
+        rests = sharedPref.getString("rests", "error,").split(",");
+        sets = sharedPref.getString("sets", "error,").split(",");
         nbExercises = exercises.length;
 
-        final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
-        weights = sharedPref.getString("weights", "error").split(",");
-        exerciseWeight.setText(weights[0]);
-
-        final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
-        reps = sharedPref.getString("reps", "error").split(",");
-        exerciseReps.setText(reps[0]);
-
-        rests = sharedPref.getString("rests", "error").split(",");
-        String secsDurationRaw = rests[0];
-        long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
-
-        // Start the timer.
-        final TextView timerText = (TextView) findViewById(R.id.timer_text);
-        restTimer = new RestTimer(this, msDuration, timerText);
+        nextExercise();
     }
 
     @Override
@@ -81,35 +82,78 @@ public class RestActivity extends TimerActivity{
         super.onResume();  // Always call the superclass method first
         // Not used anymore.
         Bundle extras = getIntent().getExtras();
-
-        restTimer.start();
     }
 
     public void timerFinished() {
-        ((TextView) findViewById(R.id.timer_text)).setText("Timer finished.");
-        nextExercise();
+        switchToRepsPicker();
+    }
+
+    private void switchToRepsPicker() {
+        // Hide timer.
+        TextView timerText = (TextView) findViewById(R.id.timer_text);
+        timerText.setVisibility(View.GONE);
+
+        // Show reps picker.
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        repsPicker.setVisibility(View.VISIBLE);
+
+        // Hide skip button.
+        Button skipButton = (Button) findViewById(R.id.button_skip);
+        skipButton.setVisibility(View.GONE);
+
+        // Show next button.
+        Button nextButton = (Button) findViewById(R.id.button_next);
+        nextButton.setVisibility(View.VISIBLE);
     }
 
     private void nextExercise() {
         if(currentExercise < nbExercises)
         {
-            //restTimer.restart(Long.parseLong(rests[currentExercise++]) * 1000);
-            TextView timerText = (TextView) findViewById(R.id.timer_text);
-            timerText.setVisibility(View.GONE);
+            final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
+            exerciseName.setText(exercises[currentExercise] + " (" + currentSet + "/" + sets[currentExercise] + ")");
 
-            NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
-            repsPicker.setVisibility(View.VISIBLE);
+            final TextView exerciseWeight = (TextView) findViewById(R.id.exercise_weight);
+            exerciseWeight.setText(weights[currentExercise]);
 
-            Button skipButton = (Button) findViewById(R.id.button_skip);
-            skipButton.setVisibility(View.GONE);
+            final TextView exerciseReps = (TextView) findViewById(R.id.exercise_reps);
+            exerciseReps.setText(reps[currentExercise]);
 
-            Button nextButton = (Button) findViewById(R.id.button_next);
-            skipButton.setVisibility(View.VISIBLE);
+            String secsDurationRaw = rests[currentExercise];
+            long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
+            final TextView timerText = (TextView) findViewById(R.id.timer_text);
+            restTimer = new RestTimer(this, msDuration, timerText);
 
+            if ( currentSet == Long.parseLong(sets[currentExercise]) ) {
+                currentExercise++;
+                currentSet = 1;
+            }
+            else
+                currentSet++;
+
+            switchToTimer();
+            restTimer.start();
         }
         else
             finish();
+    }
+
+    private void switchToTimer() {
+        // Show timer.
+        TextView timerText = (TextView) findViewById(R.id.timer_text);
+        timerText.setVisibility(View.VISIBLE);
+
+        // Hide reps picker.
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        repsPicker.setVisibility(View.GONE);
+
+        // Show skip button.
+        Button skipButton = (Button) findViewById(R.id.button_skip);
+        skipButton.setVisibility(View.VISIBLE);
+
+        // Hide next button.
+        Button nextButton = (Button) findViewById(R.id.button_next);
+        nextButton.setVisibility(View.GONE);
     }
 
     @Override
@@ -127,18 +171,12 @@ public class RestActivity extends TimerActivity{
         System.out.println("Stop!!!");
     }
 
-    public void skipTimer(View view) {
+    public void skipButton(View view) {
         restTimer.complete();
     }
 
-    //CountDownTimer countDownTimer;
-    private RestTimer restTimer;
-    private String[] exercises;
-    private String[] weights;
-    private String[] reps;
-    private String[] sets;
-    private String[] rests;
-    private int nbExercises;
-    private int currentExercise;
+    public void nextButton(View view) {
+        nextExercise();
+    }
 }
 
