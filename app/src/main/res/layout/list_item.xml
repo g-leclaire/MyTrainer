@@ -73,7 +73,8 @@
             android:singleLine="true"
             android:ellipsize="marquee"
             android:textSize="15sp"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:paddingLeft="20sp"/>
 
     </LinearLayout>
 </RelativeLayout>

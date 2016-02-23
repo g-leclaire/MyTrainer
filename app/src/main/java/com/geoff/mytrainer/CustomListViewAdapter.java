@@ -22,32 +22,29 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
         this.context = context;
     }
 
-    /*private view holder class*/
+    // Private view holder class.
     private class ViewHolder {
-        //ImageView imageView;
         TextView txtTitle;
         TextView txtDesc;
     }
 
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder holder = null;
-        RowItem rowItem = getItem(position);
-
         LayoutInflater mInflater = (LayoutInflater) context
                 .getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+
+        ViewHolder holder;
         if (convertView == null) {
             convertView = mInflater.inflate(R.layout.list_item, null);
             holder = new ViewHolder();
             holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
-            //holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
             convertView.setTag(holder);
         } else
             holder = (ViewHolder) convertView.getTag();
 
+        RowItem rowItem = getItem(position);
         holder.txtDesc.setText(rowItem.getDesc());
-        holder.txtTitle.setText(rowItem.getTitle());
-        //holder.imageView.setImageResource(rowItem.getImageId());
+        holder.txtTitle.setText((position + 1) + ". " + rowItem.getTitle());
 
         return convertView;
     }

@@ -39,16 +39,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
-    public static final String[] descriptions = new String[] {
-            "3 x 8 x 150 lb",
-            "3 x 8 x 120 lb",
-            "3 x 8 x 130 lb"
-    };
-
+    // TODO: Delete.
     public static final Integer[] images = { 0,0,0 };
 
-    ListView listView;
-    List<RowItem> rowItems;
+    private List<RowItem> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,11 +87,33 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             rowItems.add(item);
         }
 
-        listView = (ListView) findViewById(R.id.list);
+        ListView listView = (ListView) findViewById(R.id.list);
         CustomListViewAdapter adapter = new CustomListViewAdapter(this,
                 R.layout.list_item, rowItems);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(this);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -129,28 +145,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         layout.findViewById(R.id.button_edit).setVisibility(visibility);
         layout.findViewById(R.id.button_up).setVisibility(visibility);
         layout.findViewById(R.id.button_down).setVisibility(visibility);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void sendMessage(View view) {
@@ -193,7 +187,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void buttonEdit(View view) {
-
+        // TODO: Implement.
     }
 
     public void buttonUp(View view) {
