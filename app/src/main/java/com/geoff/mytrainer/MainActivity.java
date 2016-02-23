@@ -123,7 +123,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         RelativeLayout layout = (RelativeLayout) view;
         layout.findViewById(R.id.button_delete).setVisibility(visibility);
         layout.findViewById(R.id.button_edit).setVisibility(visibility);
-        layout.findViewById(R.id.button_move).setVisibility(visibility);
+        layout.findViewById(R.id.button_up).setVisibility(visibility);
+        layout.findViewById(R.id.button_down).setVisibility(visibility);
     }
 
     @Override
@@ -169,9 +170,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         hideItemsOptions(list);
     }
 
-    public void buttonMove(View view) {
+    public void buttonEdit(View view) {
     }
 
-    public void buttonEdit(View view) {
+    public void buttonUp(View view) {
+    }
+
+    public void buttonDown(View view) {
     }
 }

@@ -25,40 +25,30 @@
         android:visibility="gone"
         android:onClick="buttonEdit" />
 
-    <LinearLayout android:orientation="vertical"
-        android:id="@+id/button_move"
-        android:layout_toLeftOf="@+id/button_edit"
+    <ImageButton
+        android:id="@+id/button_down"
         android:layout_width="40sp"
         android:layout_height="match_parent"
-        android:layout_margin="10sp"
+        android:layout_toLeftOf="@id/button_edit"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/arrow_down_float"
+        style="?android:attr/borderlessButtonStyle"
         android:visibility="gone"
-        android:onClick="buttonMove" >
+        android:onClick="buttonDown" />
 
-        <ImageView
-            android:id="@+id/arrow_up"
-            android:layout_width="40sp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/arrow_up_float" />
-
-        <ImageView
-            android:id="@+id/separator"
-            android:layout_width="40sp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/divider_horizontal_textfield" />
-
-        <ImageView
-            android:id="@+id/arrow_down"
-            android:layout_width="40sp"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:src="@android:drawable/arrow_down_float" />
-
-    </LinearLayout>
+    <ImageButton
+        android:id="@+id/button_up"
+        android:layout_width="40sp"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@id/button_down"
+        android:layout_centerVertical="true"
+        android:src="@android:drawable/arrow_up_float"
+        style="?android:attr/borderlessButtonStyle"
+        android:visibility="gone"
+        android:onClick="buttonUp" />
 
     <LinearLayout android:orientation="vertical"
-        android:layout_toLeftOf="@+id/button_move"
+        android:layout_toLeftOf="@+id/button_up"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/TextLayout"
