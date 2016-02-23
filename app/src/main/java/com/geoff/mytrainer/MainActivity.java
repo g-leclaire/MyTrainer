@@ -31,10 +31,13 @@ import java.util.List;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
+    private String[] exercises;
+    private String[] weights;
+    private String[] reps;
+    private String[] sets;
+    private String[] rests;
 
-    public static final String[] titles = new String[] { "Squat",
-            "Bench press", "Deadlift" };
+    public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
     public static final String[] descriptions = new String[] {
             "3 x 8 x 150 lb",
@@ -68,26 +71,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             }
         });
 
-        //String[] array = {"Squat", "Bench Press", "Dead Lift"};
-        /*final UsState[] states = UsState.values();
-        final ListAdapter listAdapter = createListAdapter(states);
-
-        ListView listView = (ListView) findViewById(R.id.listview);
-        listView.setAdapter(listAdapter);*/
-
-        rowItems = new ArrayList<>();
-        for (int i = 0; i < titles.length; i++) {
-            RowItem item = new RowItem(images[i], titles[i], descriptions[i]);
-            rowItems.add(item);
-        }
-
-        listView = (ListView) findViewById(R.id.list);
-        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
-                R.layout.list_item, rowItems);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(this);
-
-
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("exercises", "Squat,Bench Press,Deadlift");
@@ -96,6 +79,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         editor.putString("weights", "150,120,130");
         editor.putString("rests", "30,60,90");
         editor.apply();
+
+        // Retrieve and set exercises info.
+        exercises = sharedPref.getString("exercises", "error,").split(",");
+        weights = sharedPref.getString("weights", "error,").split(",");
+        reps = sharedPref.getString("reps", "error,").split(",");
+        rests = sharedPref.getString("rests", "error,").split(",");
+        sets = sharedPref.getString("sets", "error,").split(",");
+
+        rowItems = new ArrayList<>();
+        for (int i = 0; i < exercises.length; i++) {
+            RowItem item = new RowItem(images[i], exercises[i], sets[i] + " x " + reps[i] + " x " + weights[i] + " lb");
+            rowItems.add(item);
+        }
+
+        listView = (ListView) findViewById(R.id.list);
+        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+                R.layout.list_item, rowItems);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(this);
     }
 
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
