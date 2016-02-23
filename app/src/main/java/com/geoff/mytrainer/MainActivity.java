@@ -1,11 +1,13 @@
 package com.geoff.mytrainer;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -157,17 +159,35 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
     }
 
-    public void buttonDelete(View view) {
+    public void buttonDelete(final View view) {
         // Get the list.
-        ListView list = (ListView) findViewById(R.id.list);
+        final ListView list = (ListView) findViewById(R.id.list);
         // Get the list adapter.
-        CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+        final CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
         // Get the item position.
-        int position = list.getPositionForView(view);
-        // Remove the item from the adapter.
-        adapter.remove(position);
-        // Hide all the items options.
-        hideItemsOptions(list);
+        final int position = list.getPositionForView(view);
+        // Get the item.
+        RowItem item = adapter.getItem(position);
+
+        // Delete dialog.
+        new AlertDialog.Builder(this)
+                .setTitle("Delete exercise")
+                .setMessage("Delete " + item.getTitle() + " exercise?")
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Remove the item from the adapter.
+                        adapter.remove(position);
+                        // Hide all the items options.
+                        hideItemsOptions(list);
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing.
+                    }
+                })
+                .setIcon(android.R.drawable.ic_delete)
+                .show();
     }
 
     public void buttonEdit(View view) {
