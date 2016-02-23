@@ -86,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
 
 
-
-
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("exercises", "Squat,Bench Press,Deadlift");
@@ -106,19 +104,26 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
 
-        // Show the clicked view options and hide the others.
-        for (int i = 0; i < parent.getCount(); i++) {
-            RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
-            int visibility;
-            if (layout == (RelativeLayout) view)
-                visibility = View.VISIBLE;
-            else
-                visibility = View.GONE;
+        hideItemsOptions((AdapterView<?>) view.getParent());
+        showItemOptions(view);
+    }
 
-            layout.findViewById(R.id.button_delete).setVisibility(visibility);
-            layout.findViewById(R.id.button_edit).setVisibility(visibility);
-            layout.findViewById(R.id.button_move).setVisibility(visibility);
-        }
+    private void showItemOptions(View view){
+        // Show the options of the item.
+        setOptionsVisibility(view, View.VISIBLE);
+    }
+
+    private void hideItemsOptions(AdapterView<?> parent){
+        // Hides all the options of the items in the AdapterView.
+        for (int i = 0; i < parent.getCount(); i++)
+            setOptionsVisibility(parent.getChildAt(i), View.GONE);
+    }
+
+    private void setOptionsVisibility(View view, int visibility){
+        RelativeLayout layout = (RelativeLayout) view;
+        layout.findViewById(R.id.button_delete).setVisibility(visibility);
+        layout.findViewById(R.id.button_edit).setVisibility(visibility);
+        layout.findViewById(R.id.button_move).setVisibility(visibility);
     }
 
     @Override
@@ -152,10 +157,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void buttonDelete(View view) {
-        System.out.println("##############" + view.getId());
-        System.out.println(view.toString());
-        RelativeLayout layout = (RelativeLayout) view.getParent();
-        layout.setVisibility(View.GONE);
+        // Get the list.
+        ListView list = (ListView) findViewById(R.id.list);
+        // Get the list adapter.
+        CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+        // Get the item position.
+        int position = list.getPositionForView(view);
+        // Remove the item from the adapter.
+        adapter.remove(position);
+        // Hide all the items options.
+        hideItemsOptions(list);
     }
 
     public void buttonMove(View view) {

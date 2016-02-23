@@ -51,4 +51,8 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
 
         return convertView;
     }
+
+    public void remove(int position){
+        remove(getItem(position));
+    }
 }
