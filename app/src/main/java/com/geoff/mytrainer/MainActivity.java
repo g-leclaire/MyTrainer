@@ -171,11 +171,54 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void buttonEdit(View view) {
+
     }
 
     public void buttonUp(View view) {
+        // Get the list.
+        ListView list = (ListView) findViewById(R.id.list);
+        // Get the list adapter.
+        CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+        // Get the item position.
+        int position = list.getPositionForView(view);
+
+        if (position > 0) {
+            // Get the item.
+            RowItem item = adapter.getItem(position);
+            // Remove the item from the adapter.
+            adapter.remove(item);
+            // Reinsert the item at the right position.
+            adapter.insert(item, position - 1);
+            // Hide all the items options.
+            hideItemsOptions(list);
+            // Get the new item view
+            View newView = list.getChildAt(position - 1);
+            // Show the item options.
+            showItemOptions(newView);
+        }
     }
 
     public void buttonDown(View view) {
+        // Get the list.
+        ListView list = (ListView) findViewById(R.id.list);
+        // Get the list adapter.
+        CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+        // Get the item position.
+        int position = list.getPositionForView(view);
+
+        if (position < list.getCount() - 1) {
+            // Get the item.
+            RowItem item = adapter.getItem(position);
+            // Remove the item from the adapter.
+            adapter.remove(item);
+            // Reinsert the item at the right position.
+            adapter.insert(item, position + 1);
+            // Hide all the items options.
+            hideItemsOptions(list);
+            // Get the new item view
+            View newView = list.getChildAt(position + 1);
+            // Show the item options.
+            showItemOptions(newView);
+        }
     }
 }
