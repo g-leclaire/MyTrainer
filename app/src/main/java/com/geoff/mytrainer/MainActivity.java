@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
@@ -97,13 +98,24 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         editor.apply();
     }
 
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        // Show toast message.
         Toast toast = Toast.makeText(getApplicationContext(),
                 "Item " + (position + 1) + ": " + rowItems.get(position),
                 Toast.LENGTH_SHORT);
-        toast.setGravity(Gravity.BOTTOM|Gravity.CENTER_HORIZONTAL, 0, 0);
+        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
+
+        // Show the clicked view options and hide the others.
+        for (int i = 0; i < parent.getCount(); i++) {
+            RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
+            if (layout == (RelativeLayout) view)
+                for (int j = 0; j < 3; j++)
+                    layout.getChildAt(j).setVisibility(View.VISIBLE);
+            else
+                for (int j = 0; j < 3; j++)
+                    layout.getChildAt(j).setVisibility(View.GONE);
+        }
     }
 
     @Override
