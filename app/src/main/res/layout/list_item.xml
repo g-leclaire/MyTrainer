@@ -11,7 +11,8 @@
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_delete"
         style="?android:attr/borderlessButtonStyle"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:onClick="buttonDelete" />
 
     <ImageButton
         android:id="@+id/button_edit"
@@ -21,7 +22,8 @@
         android:layout_centerVertical="true"
         android:src="@android:drawable/ic_menu_edit"
         style="?android:attr/borderlessButtonStyle"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:onClick="buttonEdit" />
 
     <LinearLayout android:orientation="vertical"
         android:id="@+id/button_move"
@@ -29,7 +31,8 @@
         android:layout_width="40sp"
         android:layout_height="match_parent"
         android:layout_margin="10sp"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:onClick="buttonMove" >
 
         <ImageView
             android:id="@+id/arrow_up"

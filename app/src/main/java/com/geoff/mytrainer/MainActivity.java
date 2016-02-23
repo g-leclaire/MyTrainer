@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         // Show toast message.
         Toast toast = Toast.makeText(getApplicationContext(),
-                "Item " + (position + 1) + ": " + rowItems.get(position),
+                "Exercise " + (position + 1) + ": " + rowItems.get(position),
                 Toast.LENGTH_SHORT);
         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
         toast.show();
@@ -109,12 +109,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         // Show the clicked view options and hide the others.
         for (int i = 0; i < parent.getCount(); i++) {
             RelativeLayout layout = (RelativeLayout) parent.getChildAt(i);
+            int visibility;
             if (layout == (RelativeLayout) view)
-                for (int j = 0; j < 3; j++)
-                    layout.getChildAt(j).setVisibility(View.VISIBLE);
+                visibility = View.VISIBLE;
             else
-                for (int j = 0; j < 3; j++)
-                    layout.getChildAt(j).setVisibility(View.GONE);
+                visibility = View.GONE;
+
+            layout.findViewById(R.id.button_delete).setVisibility(visibility);
+            layout.findViewById(R.id.button_edit).setVisibility(visibility);
+            layout.findViewById(R.id.button_move).setVisibility(visibility);
         }
     }
 
@@ -146,5 +149,18 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         intent.putExtra("message", "Hello from MainActivity!");
 
         startActivity(intent);
+    }
+
+    public void buttonDelete(View view) {
+        System.out.println("##############" + view.getId());
+        System.out.println(view.toString());
+        RelativeLayout layout = (RelativeLayout) view.getParent();
+        layout.setVisibility(View.GONE);
+    }
+
+    public void buttonMove(View view) {
+    }
+
+    public void buttonEdit(View view) {
     }
 }
