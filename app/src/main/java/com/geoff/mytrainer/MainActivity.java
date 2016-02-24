@@ -147,9 +147,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         layout.findViewById(R.id.button_down).setVisibility(visibility);
     }
 
-    public void sendMessage(View view) {
+    public void buttonStart(View view) {
         Intent intent = new Intent(this, RestActivity.class);
-
         intent.putExtra("message", "Hello from MainActivity!");
 
         startActivity(intent);
@@ -187,7 +186,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void buttonEdit(View view) {
-        // TODO: Implement.
+        Intent intent = new Intent(this, ExerciseEditor.class);
+        intent.putExtra("message", "Hello from MainActivity!");
+
+        startActivity(intent);
     }
 
     public void buttonUp(View view) {

@@ -9,4 +9,8 @@
     <string name="weight">Weight</string>
     <string name="rest">Rest</string>
     <string name="title_activity_exercise_editor">ExerciseEditor</string>
+    <string-array name="weight_units">
+        <item>lb</item>
+        <item>kg</item>
+    </string-array>
 </resources>

@@ -33,12 +33,12 @@
                 android:layout_weight="1"/>
 
             <Button
-                android:id="@+id/button_send"
+                android:id="@+id/button_start"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="START"
-                android:onClick="sendMessage" />
+                android:onClick="buttonStart" />
 
         </LinearLayout>
 

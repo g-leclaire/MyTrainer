@@ -84,6 +84,21 @@ public class RestActivity extends TimerActivity{
         Bundle extras = getIntent().getExtras();
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        // Debug.
+        System.out.println("Pause!!!");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();  // Always call the superclass method first
+        // Debug.
+        System.out.println("Stop!!!");
+    }
+
     public void timerFinished() {
         switchToRepsPicker();
     }
@@ -154,21 +169,6 @@ public class RestActivity extends TimerActivity{
         // Hide next button.
         Button nextButton = (Button) findViewById(R.id.button_next);
         nextButton.setVisibility(View.GONE);
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();  // Always call the superclass method first
-
-        // Debug.
-        System.out.println("Pause!!!");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();  // Always call the superclass method first
-        // Debug.
-        System.out.println("Stop!!!");
     }
 
     public void skipButton(View view) {
