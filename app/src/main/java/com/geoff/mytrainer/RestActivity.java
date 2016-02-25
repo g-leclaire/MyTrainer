@@ -1,12 +1,15 @@
 package com.geoff.mytrainer;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class RestActivity extends TimerActivity{
@@ -57,6 +60,10 @@ public class RestActivity extends TimerActivity{
         sets = sharedPref.getString("sets", "error,").split(",");
         nbExercises = exercises.length;
 
+        // Create the timer object.
+        this.restTimer = new RestTimer(this, (TextView) findViewById(R.id.timer_text), (ProgressBar) findViewById(R.id.progressBar));
+
+        // Start the workout.
         nextExercise();
     }
 
@@ -120,7 +127,6 @@ public class RestActivity extends TimerActivity{
             long msDuration = (secsDurationRaw != null ? 1000 * Long.parseLong(secsDurationRaw) : 0);
 
             final TextView timerText = (TextView) findViewById(R.id.timer_text);
-            restTimer = new RestTimer(this, msDuration, timerText);
 
             if ( currentSet == Long.parseLong(sets[currentExercise]) ) {
                 currentExercise++;
@@ -130,7 +136,8 @@ public class RestActivity extends TimerActivity{
                 currentSet++;
 
             switchToTimer();
-            restTimer.start();
+            //restTimer.start();
+            restTimer.restart(msDuration);
         }
         else
             finish();

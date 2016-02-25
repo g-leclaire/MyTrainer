@@ -1,23 +1,18 @@
 package com.geoff.mytrainer;
 
 import android.os.CountDownTimer;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class RestTimer {
+    private ProgressBar progressBar;
 
-    public RestTimer(long msDuration) {
-        this.timerText = null;
-        this.msTotalDuration = msDuration;
+    public RestTimer(TimerActivity timerActivity, final TextView timerText, final ProgressBar progressBar) {
+        this.timerActivity = timerActivity;
+        this.timerText = timerText;
+        this.progressBar = progressBar;
         this.isRunning = false;
         createTimer(0);
-    }
-
-    public RestTimer(TimerActivity timerActivity, long msDuration, final TextView timerText) {
-        this.timerActivity = timerActivity;
-        this.msTotalDuration = msDuration;
-        this.timerText = timerText;
-        this.isRunning = false;
-        createTimer(msDuration);
     }
 
     public void cancel() {
@@ -36,10 +31,12 @@ public class RestTimer {
 
     public void restart() {
         createTimer(msTotalDuration);
+        start();
     }
 
     public void restart(long msDuration) {
-        createTimer(msDuration);
+        msTotalDuration = msDuration;
+        createTimer(msTotalDuration);
         start();
     }
 
@@ -49,7 +46,12 @@ public class RestTimer {
     }
 
     private void tick(long msRemaining) {
-            timerText.setText(formatMinutes(msRemaining) + ":" + formatSeconds(msRemaining) + ":" + formatTenths(msRemaining));
+        // Update the timer text.
+        timerText.setText(formatMinutes(msRemaining) + ":" + formatSeconds(msRemaining) + ":" + formatTenths(msRemaining));
+
+        // Update the progress bar.
+        if (msTotalDuration > 0)
+            progressBar.setProgress((int)((double)msRemaining / msTotalDuration * progressBar.getMax()));
     }
 
     private void createTimer(long msDuration) {
