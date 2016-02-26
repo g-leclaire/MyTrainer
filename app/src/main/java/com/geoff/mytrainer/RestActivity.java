@@ -10,6 +10,7 @@ import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 public class RestActivity extends TimerActivity{
@@ -49,6 +50,13 @@ public class RestActivity extends TimerActivity{
         repsPicker.setValue(8);
         repsPicker.setWrapSelectorWheel(false);
         //numberPicker.setOnValueChangedListener(this);
+
+        /*RelativeLayout.LayoutParams mParams;
+       // mParams = (RelativeLayout.LayoutParams)
+                RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        mParams.height = mFrame.getWidth();
+        mFrame.setLayoutParams(mParams);
+        mFrame.postInvalidate();*/
 
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
 
@@ -102,6 +110,10 @@ public class RestActivity extends TimerActivity{
         NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
         repsPicker.setVisibility(View.VISIBLE);
 
+        // Show reps picker instructions.
+        TextView repsInstructions = (TextView) findViewById(R.id.text_reps_instructions);
+        repsInstructions.setVisibility(View.VISIBLE);
+
         // Hide skip button.
         Button skipButton = (Button) findViewById(R.id.button_skip);
         skipButton.setVisibility(View.GONE);
@@ -109,6 +121,28 @@ public class RestActivity extends TimerActivity{
         // Show next button.
         Button nextButton = (Button) findViewById(R.id.button_next);
         nextButton.setVisibility(View.VISIBLE);
+    }
+
+    private void switchToTimer() {
+        // Show timer.
+        TextView timerText = (TextView) findViewById(R.id.timer_text);
+        timerText.setVisibility(View.VISIBLE);
+
+        // Hide reps picker.
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        repsPicker.setVisibility(View.GONE);
+
+        // Hide reps picker instructions.
+        TextView repsInstructions = (TextView) findViewById(R.id.text_reps_instructions);
+        repsInstructions.setVisibility(View.GONE);
+
+        // Show skip button.
+        Button skipButton = (Button) findViewById(R.id.button_skip);
+        skipButton.setVisibility(View.VISIBLE);
+
+        // Hide next button.
+        Button nextButton = (Button) findViewById(R.id.button_next);
+        nextButton.setVisibility(View.GONE);
     }
 
     private void nextExercise() {
@@ -141,24 +175,6 @@ public class RestActivity extends TimerActivity{
         }
         else
             finish();
-    }
-
-    private void switchToTimer() {
-        // Show timer.
-        TextView timerText = (TextView) findViewById(R.id.timer_text);
-        timerText.setVisibility(View.VISIBLE);
-
-        // Hide reps picker.
-        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
-        repsPicker.setVisibility(View.GONE);
-
-        // Show skip button.
-        Button skipButton = (Button) findViewById(R.id.button_skip);
-        skipButton.setVisibility(View.VISIBLE);
-
-        // Hide next button.
-        Button nextButton = (Button) findViewById(R.id.button_next);
-        nextButton.setVisibility(View.GONE);
     }
 
     public void skipButton(View view) {

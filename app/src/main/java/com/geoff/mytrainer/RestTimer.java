@@ -21,6 +21,7 @@ public class RestTimer {
 
     public void complete() {
         countDownTimer.cancel();
+        progressBar.setProgress(0);
         finish();
     }
 

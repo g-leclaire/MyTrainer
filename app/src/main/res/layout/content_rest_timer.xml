@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content"
@@ -17,9 +17,9 @@
 
 
     <LinearLayout
+        android:id="@+id/text_exercise_info"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="2"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
         android:gravity="center">
 
@@ -74,45 +74,63 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="3"
-        android:orientation="vertical"
-        android:gravity="center">
 
-        <LinearLayout
+    <RelativeLayout
+        android:id="@+id/center_view"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/text_exercise_info">
+
+        <TextView
+            android:id="@+id/timer_text"
+            android:text="0:00:00"
+            android:textSize="60sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
 
-            <TextView
-                android:id="@+id/timer_text"
-                android:text="0:00:00"
-                android:textSize="80sp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_vertical|center_horizontal"/>
+        <NumberPicker
+            android:id="@+id/reps_picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleX="0.8"
+            android:scaleY="0.8"
+            android:layout_centerInParent="true"
+            android:visibility="gone"/>
 
-            <NumberPicker
-                android:id="@+id/reps_picker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"/>
+        <TextView
+            android:id="@+id/text_reps_instructions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Completed repetitions:"
+            android:layout_above="@id/reps_picker"
+            android:visibility="gone"/>
 
-        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progressBar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:max="500"
+            android:progress="0"
+            android:progressDrawable="@drawable/circular" />
 
-    </LinearLayout>
+    </RelativeLayout>
+
+
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center">
+        android:layout_height="wrap_content"
+        android:layout_below="@id/center_view">
 
         <Button
             android:id="@+id/button_skip"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="Skip"
             android:onClick="skipButton" />
 
@@ -120,28 +138,12 @@
             android:id="@+id/button_next"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="Next"
             android:onClick="nextButton"
             android:visibility="gone"/>
 
     </RelativeLayout>
 
-    <ProgressBar
-        android:id="@+id/progressBar"
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:max="500"
-        android:progress="0"
-        android:progressDrawable="@drawable/circular" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="4">
-    </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
 
