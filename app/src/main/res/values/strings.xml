@@ -13,4 +13,5 @@
         <item>lb</item>
         <item>kg</item>
     </string-array>
+    <string name="title_activity_summary">Summary</string>
 </resources>
