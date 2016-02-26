@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="?android:attr/listPreferredItemHeight"
-    android:padding="6dip">
+    android:padding="6dp">
 
     <ImageButton
         android:id="@+id/button_delete"
         android:layout_width="40sp"
-        android:layout_height="match_parent"
+        android:layout_height="40sp"
         android:layout_alignParentRight="true"
         android:src="@android:drawable/ic_menu_delete"
         style="?android:attr/borderlessButtonStyle"
@@ -17,7 +17,7 @@
     <ImageButton
         android:id="@+id/button_edit"
         android:layout_width="40sp"
-        android:layout_height="match_parent"
+        android:layout_height="40sp"
         android:layout_toLeftOf="@id/button_delete"
         android:layout_centerVertical="true"
         android:src="@android:drawable/ic_menu_edit"
@@ -28,7 +28,7 @@
     <ImageButton
         android:id="@+id/button_down"
         android:layout_width="40sp"
-        android:layout_height="match_parent"
+        android:layout_height="40sp"
         android:layout_toLeftOf="@id/button_edit"
         android:layout_centerVertical="true"
         android:src="@android:drawable/arrow_down_float"
@@ -39,7 +39,7 @@
     <ImageButton
         android:id="@+id/button_up"
         android:layout_width="40sp"
-        android:layout_height="match_parent"
+        android:layout_height="40sp"
         android:layout_toLeftOf="@id/button_down"
         android:layout_centerVertical="true"
         android:src="@android:drawable/arrow_up_float"
