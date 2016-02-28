@@ -117,7 +117,7 @@ public class ExerciseListActivity extends AppCompatActivity
     public void onPause() {
         super.onPause();  // Always call the superclass method first
 
-        //saveExercises();
+        saveExercises();
     }
 
     @Override
@@ -400,6 +400,7 @@ public class ExerciseListActivity extends AppCompatActivity
 
             makeRowItems();
             adapter.notifyDataSetChanged();
+            saveExercises();
 
 
             // Reinsert the item at the right position.
