@@ -22,15 +22,27 @@ public class ExerciseEditorActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        // --- Initialise all the things! ---
+
         // Get the spinner.
-        Spinner spinner = (Spinner) findViewById(R.id.spinner_units);
+        Spinner units = (Spinner) findViewById(R.id.spinner_units);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> unitsAdapter = ArrayAdapter.createFromResource(this,
                 R.array.weight_units, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        unitsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        spinner.setAdapter(adapter);
+        units.setAdapter(unitsAdapter);
+
+        ArrayAdapter<CharSequence> muscleAdapter = ArrayAdapter.createFromResource(this,
+                R.array.muscles, android.R.layout.simple_spinner_item);
+        muscleAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        Spinner mainMuscle = (Spinner) findViewById(R.id.spinner_mainmuscle);
+        mainMuscle.setAdapter(muscleAdapter);
+
+        Spinner secondaryMuscle = (Spinner) findViewById(R.id.spinner_secondarymuscle);
+        secondaryMuscle.setAdapter(muscleAdapter);
 
         EditText exerciseName = (EditText) findViewById(R.id.edittext_exercise_name);
         exerciseName.setText("New exercise");
@@ -50,10 +62,26 @@ public class ExerciseEditorActivity extends AppCompatActivity {
         sets.setValue(3);
         sets.setEnabled(true);
 
-        /*TimePicker rest = (TimePicker) findViewById(R.id.timepicker_rest);
-        rest.setCurrentHour(1);
-        rest.setCurrentMinute(30);
-        rest.setEnabled(true);*/
+        NumberPicker minutes = (NumberPicker) findViewById(R.id.numberpicker_minutes);
+        minutes.setMinValue(0);
+        minutes.setMaxValue(9);
+        minutes.setValue(1);
+        minutes.setEnabled(true);
+
+        NumberPicker seconds = (NumberPicker) findViewById(R.id.numberpicker_seconds);
+        seconds.setMinValue(0);
+        seconds.setMaxValue(59);
+        seconds.setValue(0);
+        seconds.setFormatter(new NumberPicker.Formatter() {
+            @Override
+            public String format(int value) {
+                if (value < 10)
+                    return "0" + value;
+                else
+                    return "" + value;
+            }
+        });
+        seconds.setEnabled(true);
     }
 
     public void buttonSave(View view) {

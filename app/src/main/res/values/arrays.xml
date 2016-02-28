@@ -5,4 +5,21 @@
         <item>Uranus</item>
         <item>Saturn</item>
     </string-array>
+    <string-array name="muscles" >
+        <item>Unknown</item>
+        <item>Abdominals</item>
+        <item>Biceps</item>
+        <item>Calves</item>
+        <item>Chest</item>
+        <item>Forearms</item>
+        <item>Glutes</item>
+        <item>Hamstrings</item>
+        <item>Lats</item>
+        <item>Lower Back</item>
+        <item>Middle Back</item>
+        <item>Quadriceps</item>
+        <item>Shoulders</item>
+        <item>Traps</item>
+        <item>Triceps</item>
+    </string-array>
 </resources>

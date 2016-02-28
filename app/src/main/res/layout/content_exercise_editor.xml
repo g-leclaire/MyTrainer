@@ -193,13 +193,13 @@
             android:layout_marginBottom="20dp">
 
             <Spinner
-
+                android:id="@+id/spinner_mainmuscle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <Spinner
-
+                android:id="@+id/spinner_secondarymuscle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -220,7 +220,8 @@
                     android:text="Save"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:onClick="buttonSave"/>
+                    android:onClick="buttonSave"
+                    android:layout_marginRight="8dp"/>
 
                 <Button
                     android:id="@+id/button_cancel"
@@ -228,7 +229,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/button_save"
-                    android:onClick="buttonCancel" />
+                    android:onClick="buttonCancel"
+                    android:layout_marginLeft="8dp"/>
 
             </RelativeLayout>
 
