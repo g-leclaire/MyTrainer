@@ -20,7 +20,7 @@ public class MyApp extends Application {
         // this method fires once as well as constructor
         // but also application has context here
 
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("Workout 1", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("exercises", "Squat,Bench Press,Deadlift");
         editor.putString("sets", "2,2,3");
@@ -29,6 +29,11 @@ public class MyApp extends Application {
         editor.putString("rests", "30,60,90");
         editor.putString("mainMuscles", "11,4,9");
         editor.putString("secondaryMuscles", "7,14,7");
+        editor.apply();
+
+        sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putString("currentWorkout", "Workout 1");
         editor.apply();
     }
 }

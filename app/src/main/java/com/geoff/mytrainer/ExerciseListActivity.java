@@ -36,6 +36,7 @@ public class ExerciseListActivity extends AppCompatActivity
     private List<String> sets;
     private List<String> mainMuscles;
     private List<String> secondaryMuscles;
+    private String currentWorkout;
 
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
@@ -119,28 +120,6 @@ public class ExerciseListActivity extends AppCompatActivity
         //saveExercises();
     }
 
-    private void retrieveExercises()
-    {
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        // Retrieve and set exercises info.
-        exercises = new ArrayList<>( Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
-        weights = new ArrayList<>( Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
-        reps = new ArrayList<>( Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
-        rests = new ArrayList<>( Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
-        sets = new ArrayList<>( Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
-        mainMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
-        secondaryMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
-    }
-
-    private List<RowItem> makeRowItems(){
-        rowItems.clear();
-        for (int i = 0; i < exercises.size(); i++) {
-            RowItem item = new RowItem(images[i], exercises.get(i), sets.get(i) + " x " + reps.get(i) + " x " + weights.get(i) + " lb");
-            rowItems.add(item);
-        }
-        return rowItems;
-    }
-
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -196,6 +175,49 @@ public class ExerciseListActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void retrieveExercises()
+    {
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        currentWorkout = sharedPref.getString("currentWorkout", "error");
+
+        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        // Retrieve and set exercises info.
+        if (sharedPref != null) {
+            exercises = new ArrayList<>(Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
+            weights = new ArrayList<>(Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
+            reps = new ArrayList<>(Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
+            rests = new ArrayList<>(Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
+            sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
+            mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
+            secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+        }
+    }
+
+    public void saveExercises(){
+        // Save the data.
+        SharedPreferences sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("exercises", TextUtils.join(",", exercises));
+            editor.putString("sets", TextUtils.join(",", sets));
+            editor.putString("reps", TextUtils.join(",", reps));
+            editor.putString("weights", TextUtils.join(",", weights));
+            editor.putString("rests", TextUtils.join(",", rests));
+            editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
+            editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
+            editor.apply();
+        }
+    }
+
+    private List<RowItem> makeRowItems(){
+        rowItems.clear();
+        for (int i = 0; i < exercises.size(); i++) {
+            RowItem item = new RowItem(images[i], exercises.get(i), sets.get(i) + " x " + reps.get(i) + " x " + weights.get(i) + " lb");
+            rowItems.add(item);
+        }
+        return rowItems;
     }
 
     private void showItemOptions(View view){
@@ -325,22 +347,6 @@ public class ExerciseListActivity extends AppCompatActivity
             View newView = list.getChildAt(position - 1);
             // Show the item options.
             showItemOptions(newView);
-        }
-    }
-
-    public void saveExercises(){
-        // Save the data.
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        if (sharedPref != null) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("exercises", TextUtils.join(",", exercises));
-            editor.putString("sets", TextUtils.join(",", sets));
-            editor.putString("reps", TextUtils.join(",", reps));
-            editor.putString("weights", TextUtils.join(",", weights));
-            editor.putString("rests", TextUtils.join(",", rests));
-            editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
-            editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
-            editor.apply();
         }
     }
 

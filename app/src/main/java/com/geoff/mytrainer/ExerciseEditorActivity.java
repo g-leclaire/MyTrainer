@@ -29,6 +29,7 @@ public class ExerciseEditorActivity extends AppCompatActivity {
     private List<String> sets;
     private List<String> mainMuscles;
     private List<String> secondaryMuscles;
+    private String currentWorkout;
 
     private int exerciseIndex;
 
@@ -93,24 +94,8 @@ public class ExerciseEditorActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
-        // Retrieve exercises info.
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        exercises = new ArrayList<>( Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
-        weights = new ArrayList<>( Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
-        reps = new ArrayList<>( Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
-        rests = new ArrayList<>( Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
-        sets = new ArrayList<>( Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
-        mainMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
-        secondaryMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
-/*
-        exercises = new ArrayList<String>(3);
-        weights = new ArrayList<String>(3);
-        reps = new ArrayList<String>(3);
-        rests = new ArrayList<String>(3);
-        sets = new ArrayList<String>(3);
-        mainMuscles = new ArrayList<String>(3);
-        secondaryMuscles = new ArrayList<String>(3);
-*/
+        retrieveExercises();
+
         // Get the exercise index sent from the calling activity.
         Bundle extras = getIntent().getExtras();
         exerciseIndex = extras.getInt("exerciseIndex", 0);
@@ -213,7 +198,31 @@ public class ExerciseEditorActivity extends AppCompatActivity {
         }
 
         // Save the data.
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        saveExercises();
+        finish();
+    }
+
+    private void retrieveExercises()
+    {
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        currentWorkout = sharedPref.getString("currentWorkout", "error");
+
+        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        // Retrieve and set exercises info.
+        if (sharedPref != null) {
+            exercises = new ArrayList<>(Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
+            weights = new ArrayList<>(Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
+            reps = new ArrayList<>(Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
+            rests = new ArrayList<>(Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
+            sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
+            mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
+            secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+        }
+    }
+
+    public void saveExercises(){
+        // Save the data.
+        SharedPreferences sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
         if (sharedPref != null) {
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putString("exercises", TextUtils.join(",", exercises));
@@ -225,7 +234,6 @@ public class ExerciseEditorActivity extends AppCompatActivity {
             editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
             editor.apply();
         }
-        finish();
     }
 
     public void buttonCancel(View view) {
