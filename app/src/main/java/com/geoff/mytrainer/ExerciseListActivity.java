@@ -67,34 +67,28 @@ public class ExerciseListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("exercises", "Squat,Bench Press,Deadlift");
-        editor.putString("sets", "2,2,3");
-        editor.putString("reps", "8,9,8");
-        editor.putString("weights", "150,120,130");
-        editor.putString("rests", "30,60,90");
-        editor.putString("mainMuscles", "11,4,9");
-        editor.putString("secondaryMuscles", "7,14,7");
-        editor.apply();
+        /*SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        if (sharedPref != null && !sharedPref.getBoolean("hasBeenInitialized", false)) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("exercises", "Squat,Bench Press,Deadlift");
+            editor.putString("sets", "2,2,3");
+            editor.putString("reps", "8,9,8");
+            editor.putString("weights", "150,120,130");
+            editor.putString("rests", "30,60,90");
+            editor.putString("mainMuscles", "11,4,9");
+            editor.putString("secondaryMuscles", "7,14,7");
+            editor.putBoolean("hasBeenInitialized", true);
+            editor.apply();
+        }*/
 
         // Retrieve and set exercises info.
-        exercises = sharedPref.getString("exercises", "error,").split(",");
-        weights = sharedPref.getString("weights", "error,").split(",");
-        reps = sharedPref.getString("reps", "error,").split(",");
-        rests = sharedPref.getString("rests", "error,").split(",");
-        sets = sharedPref.getString("sets", "error,").split(",");
-
-        rowItems = new ArrayList<>();
-        for (int i = 0; i < exercises.length; i++) {
-            RowItem item = new RowItem(images[i], exercises[i], sets[i] + " x " + reps[i] + " x " + weights[i] + " lb");
-            rowItems.add(item);
-        }
+        retrieveExercises();
 
         ListView listView = (ListView) findViewById(R.id.list);
-        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+        final CustomListViewAdapter adapter = new CustomListViewAdapter(this,
                 R.layout.list_item, rowItems);
         listView.setAdapter(adapter);
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -108,13 +102,38 @@ public class ExerciseListActivity extends AppCompatActivity
     public void onResume() {
         super.onResume();  // Always call the superclass method first
 
+        retrieveExercises();
+
+        final CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+                R.layout.list_item, rowItems);
+        ListView listView = (ListView) findViewById(R.id.list);
+        listView.setAdapter(adapter);
+
+        // TODO: Do.
         // If an exercise was saved, show message.
-        Bundle extras = getIntent().getExtras();
+        /*Bundle extras = getIntent().getExtras();
         if (extras != null && extras.getBoolean("isNewExercise", false)) {
             Snackbar.make((FloatingActionButton) findViewById(R.id.fab), "Exercise saved.", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show();
 
             extras.putBoolean("isNewExercise", false);
+        }*/
+    }
+
+    private void retrieveExercises()
+    {
+        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        // Retrieve and set exercises info.
+        exercises = sharedPref.getString("exercises", "error,").split(",");
+        weights = sharedPref.getString("weights", "error,").split(",");
+        reps = sharedPref.getString("reps", "error,").split(",");
+        rests = sharedPref.getString("rests", "error,").split(",");
+        sets = sharedPref.getString("sets", "error,").split(",");
+
+        rowItems = new ArrayList<>();
+        for (int i = 0; i < exercises.length; i++) {
+            RowItem item = new RowItem(images[i], exercises[i], sets[i] + " x " + reps[i] + " x " + weights[i] + " lb");
+            rowItems.add(item);
         }
     }
 
@@ -174,8 +193,6 @@ public class ExerciseListActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
-    // ^^ on click list view methods ^^
 
     private void showItemOptions(View view){
         // Show the options of the item.

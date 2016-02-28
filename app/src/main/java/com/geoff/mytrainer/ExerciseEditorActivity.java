@@ -8,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -15,15 +16,20 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-public class ExerciseEditorActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
-    private String exercise;
-    private String weight;
-    private String rep;
-    private String set;
-    private String rest;
-    private String mainMuscle;
-    private String secondaryMuscle;
+public class ExerciseEditorActivity extends AppCompatActivity {
+    // Retrieve exercises info.
+    private List<String> exercises;
+    private List<String> weights;
+    private List<String> reps;
+    private List<String> rests;
+    private List<String> sets;
+    private List<String> mainMuscles;
+    private List<String> secondaryMuscles;
+
     private int exerciseIndex;
 
     @Override
@@ -33,8 +39,6 @@ public class ExerciseEditorActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        // ---------------- Initialize all the things! ----------------
 
         ArrayAdapter<CharSequence> unitsAdapter = ArrayAdapter.createFromResource(this,
                 R.array.weight_units, android.R.layout.simple_spinner_item);
@@ -91,27 +95,42 @@ public class ExerciseEditorActivity extends AppCompatActivity {
 
         // Retrieve exercises info.
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        String[] exercises = sharedPref.getString("exercises", "error,").split(",");
-        String[] weights = sharedPref.getString("weights", "error,").split(",");
-        String[] reps = sharedPref.getString("reps", "error,").split(",");
-        String[] rests = sharedPref.getString("rests", "error,").split(",");
-        String[] sets = sharedPref.getString("sets", "error,").split(",");
-        String[] mainMuscles = sharedPref.getString("mainMuscles", "error,").split(",");
-        String[] secondaryMuscles = sharedPref.getString("secondaryMuscles", "error,").split(",");
-
+        exercises = new ArrayList<>( Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
+        weights = new ArrayList<>( Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
+        reps = new ArrayList<>( Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
+        rests = new ArrayList<>( Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
+        sets = new ArrayList<>( Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
+        mainMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
+        secondaryMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+/*
+        exercises = new ArrayList<String>(3);
+        weights = new ArrayList<String>(3);
+        reps = new ArrayList<String>(3);
+        rests = new ArrayList<String>(3);
+        sets = new ArrayList<String>(3);
+        mainMuscles = new ArrayList<String>(3);
+        secondaryMuscles = new ArrayList<String>(3);
+*/
         // Get the exercise index sent from the calling activity.
         Bundle extras = getIntent().getExtras();
         exerciseIndex = extras.getInt("exerciseIndex", 0);
 
         // Set the current exercise info.
-        if (exerciseIndex < exercises.length) {
-            exercise = exercises[exerciseIndex];
-            weight = weights[exerciseIndex];
-            rep = reps[exerciseIndex];
-            rest = rests[exerciseIndex];
-            set = sets[exerciseIndex];
-            mainMuscle = mainMuscles[exerciseIndex];
-            secondaryMuscle = secondaryMuscles[exerciseIndex];
+        String exercise;
+        String weight;
+        String rep;
+        String rest;
+        String set;
+        String mainMuscle;
+        String secondaryMuscle;
+        if (exerciseIndex < exercises.size()) {
+            exercise = exercises.get(exerciseIndex);
+            weight = weights.get(exerciseIndex);
+            rep = reps.get(exerciseIndex);
+            rest = rests.get(exerciseIndex);
+            set = sets.get(exerciseIndex);
+            mainMuscle = mainMuscles.get(exerciseIndex);
+            secondaryMuscle = secondaryMuscles.get(exerciseIndex);
         }
         else {
             exercise = "New exercise";
@@ -150,16 +169,71 @@ public class ExerciseEditorActivity extends AppCompatActivity {
     }
 
     public void buttonSave(View view) {
-        // TODO: Save data.
-        // Start the exercise  editor with the exercise index as the number of exercises.
-        Intent intent = new Intent(this, ExerciseListActivity.class);
-        intent.putExtra("isNewExercise", true);
-        startActivity(intent);
+        // Get all the data from the views.
+        EditText exerciseNameText = (EditText) findViewById(R.id.edittext_exercise_name);
+        String newExerciseName = exerciseNameText.getText().toString();
+
+        EditText weightText = (EditText) findViewById(R.id.edittext_weight);
+        String newWeight = weightText.getText().toString();
+
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.numberpicker_reps);
+        String newRep = String.valueOf(repsPicker.getValue());
+
+        NumberPicker setsPicker = (NumberPicker) findViewById(R.id.numberpicker_sets);
+        String newSet = String.valueOf(setsPicker.getValue());
+
+        NumberPicker minutesPicker = (NumberPicker) findViewById(R.id.numberpicker_minutes);
+        NumberPicker secondsPicker = (NumberPicker) findViewById(R.id.numberpicker_seconds);
+        String newRest = String.valueOf(minutesPicker.getValue() * 60 + secondsPicker.getValue());
+
+        Spinner mainMuscleSpinner = (Spinner) findViewById(R.id.spinner_mainmuscle);
+        String newMainMuscle = mainMuscleSpinner.getSelectedItem().toString();
+
+        Spinner secondaryMuscleSpinner = (Spinner) findViewById(R.id.spinner_secondarymuscle);
+        String newSecondaryMuscle = secondaryMuscleSpinner.getSelectedItem().toString();
+
+        // Add the new data or modify it.
+        if (exerciseIndex >= exercises.size()) {
+            exercises.add(newExerciseName);
+            weights.add(newWeight);
+            reps.add(newRep);
+            sets.add(newSet);
+            rests.add(newRest);
+            mainMuscles.add(newMainMuscle);
+            secondaryMuscles.add(newSecondaryMuscle);
+        }
+        else {
+            exercises.set(exerciseIndex, newExerciseName);
+            weights.set(exerciseIndex, newWeight);
+            reps.set(exerciseIndex, newRep);
+            sets.set(exerciseIndex, newSet);
+            rests.set(exerciseIndex, newRest);
+            mainMuscles.set(exerciseIndex, newMainMuscle);
+            secondaryMuscles.set(exerciseIndex, newSecondaryMuscle);
+        }
+
+        // Save the data.
+        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("exercises", TextUtils.join(",", exercises));
+            editor.putString("sets", TextUtils.join(",", sets));
+            editor.putString("reps", TextUtils.join(",", reps));
+            editor.putString("weights", TextUtils.join(",", weights));
+            editor.putString("rests", TextUtils.join(",", rests));
+            editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
+            editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
+            editor.apply();
+        }
+        finish();
     }
 
     public void buttonCancel(View view) {
-        Intent intent = new Intent(this, ExerciseListActivity.class);
-        intent.putExtra("isNewExercise", false);
-        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
     }
 }
