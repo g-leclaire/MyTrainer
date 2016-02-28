@@ -14,4 +14,8 @@
         <item>kg</item>
     </string-array>
     <string name="title_activity_summary">Summary</string>
+    <string name="title_activity_strawberry">strawberry</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

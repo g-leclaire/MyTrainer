@@ -96,7 +96,13 @@ public class RestActivity extends TimerActivity{
     }
 
     public void timerFinished() {
-        switchToRepsPicker();
+
+        //switchToRepsPicker();
+        Intent intent = new Intent(this, strawberry.class);
+        intent.putExtra("message", "Hello from RestActivity!");
+
+        startActivity(intent);
+        finish();
     }
 
     private void switchToRepsPicker() {
