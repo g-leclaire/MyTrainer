@@ -21,6 +21,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_strawberry" />
+    <include layout="@layout/content_exercise_list" />
 
 </android.support.design.widget.CoordinatorLayout>
