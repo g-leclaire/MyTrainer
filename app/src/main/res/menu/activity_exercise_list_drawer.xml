@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Routines">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_workout1"
+                    android:title="Workout 1" />
+                <item
+                    android:id="@+id/nav_workout2"
+                    android:title="Workout 2" />
+            </group>
+        </menu>
+    </item>
+
+    <group>
+
+            <item
+                android:id="@+id/nav_workoutlog"
+                android:title="Workout Log" />
+            <item
+                android:id="@+id/nav_statistics"
+                android:title="Statistics" />
+            <item
+                android:id="@+id/nav_settings"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Settings" />
+
+    </group>
+
+</menu>

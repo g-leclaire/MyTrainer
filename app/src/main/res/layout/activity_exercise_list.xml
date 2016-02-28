@@ -39,6 +39,6 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/nav_header_exercise_list"
-        app:menu="@menu/activity_strawberry_drawer" />
+        app:menu="@menu/activity_exercise_list_drawer" />
 
 </android.support.v4.widget.DrawerLayout>
