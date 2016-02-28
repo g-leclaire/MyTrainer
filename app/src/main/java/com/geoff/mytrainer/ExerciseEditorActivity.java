@@ -1,6 +1,7 @@
 package com.geoff.mytrainer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -100,7 +101,7 @@ public class ExerciseEditorActivity extends AppCompatActivity {
 
         // Get the exercise index sent from the calling activity.
         Bundle extras = getIntent().getExtras();
-        exerciseIndex = extras.getInt("exerciseIndex");
+        exerciseIndex = extras.getInt("exerciseIndex", 0);
 
         // Set the current exercise info.
         if (exerciseIndex < exercises.length) {
@@ -150,10 +151,15 @@ public class ExerciseEditorActivity extends AppCompatActivity {
 
     public void buttonSave(View view) {
         // TODO: Save data.
-        finish();
+        // Start the exercise  editor with the exercise index as the number of exercises.
+        Intent intent = new Intent(this, ExerciseListActivity.class);
+        intent.putExtra("isNewExercise", true);
+        startActivity(intent);
     }
 
     public void buttonCancel(View view) {
-        finish();
+        Intent intent = new Intent(this, ExerciseListActivity.class);
+        intent.putExtra("isNewExercise", false);
+        startActivity(intent);
     }
 }

@@ -51,8 +51,10 @@ public class ExerciseListActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                // Start the exercise  editor with the exercise index as the number of exercises.
+                Intent intent = new Intent(getApplicationContext(), ExerciseEditorActivity.class);
+                intent.putExtra("exerciseIndex", exercises.length);
+                startActivity(intent);
             }
         });
 
@@ -100,6 +102,20 @@ public class ExerciseListActivity extends AppCompatActivity
                 showItemOptions(view);
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();  // Always call the superclass method first
+
+        // If an exercise was saved, show message.
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("isNewExercise", false)) {
+            Snackbar.make((FloatingActionButton) findViewById(R.id.fab), "Exercise saved.", Snackbar.LENGTH_LONG)
+                    .setAction("Action", null).show();
+
+            extras.putBoolean("isNewExercise", false);
+        }
     }
 
     @Override
