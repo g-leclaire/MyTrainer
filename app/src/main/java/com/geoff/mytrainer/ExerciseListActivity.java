@@ -65,7 +65,6 @@ public class ExerciseListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        //####################
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("exercises", "Squat,Bench Press,Deadlift");
@@ -73,6 +72,8 @@ public class ExerciseListActivity extends AppCompatActivity
         editor.putString("reps", "8,9,8");
         editor.putString("weights", "150,120,130");
         editor.putString("rests", "30,60,90");
+        editor.putString("mainMuscles", "11,4,9");
+        editor.putString("secondaryMuscles", "7,14,7");
         editor.apply();
 
         // Retrieve and set exercises info.
@@ -218,8 +219,13 @@ public class ExerciseListActivity extends AppCompatActivity
     }
 
     public void buttonEdit(View view) {
+        // Get the position of the exercise.
+        ListView list = (ListView) findViewById(R.id.list);
+        int position = list.getPositionForView(view);
+
+        // Start the exercise  editor and send the position.
         Intent intent = new Intent(this, ExerciseEditorActivity.class);
-        intent.putExtra("message", "Hello from MainActivity!");
+        intent.putExtra("exerciseIndex", position);
 
         startActivity(intent);
     }
@@ -246,6 +252,7 @@ public class ExerciseListActivity extends AppCompatActivity
             // Show the item options.
             showItemOptions(newView);
         }
+        // TODO: modify data
     }
 
     public void buttonDown(View view) {
@@ -270,5 +277,6 @@ public class ExerciseListActivity extends AppCompatActivity
             // Show the item options.
             showItemOptions(newView);
         }
+        // TODO: modify data
     }
 }
