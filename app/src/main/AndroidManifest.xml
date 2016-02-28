@@ -10,7 +10,7 @@
         android:theme="@style/Theme.AppCompat.Light">
 
         <activity
-            android:name=".strawberry"
+            android:name=".ExerciseListActivity"
             android:label="@string/app_name"
 
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -20,37 +20,31 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
-        <activity
             android:name=".RestActivity"
             android:label="@string/title_activity_display_message"
-            android:parentActivityName=".strawberry"
+            android:parentActivityName=".ExerciseListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.geoff.mytrainer.MainActivity" />
+                android:value=".ExerciseListActivity" />
         </activity>
         <activity
-            android:name=".ExerciseEditor"
+            android:name=".ExerciseEditorActivity"
             android:label="@string/title_activity_exercise_editor"
-            android:parentActivityName=".strawberry"
+            android:parentActivityName=".ExerciseListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.geoff.mytrainer.MainActivity" />
+                android:value=".ExerciseListActivity" />
         </activity>
         <activity
             android:name=".SummaryActivity"
             android:label="@string/title_activity_summary"
-            android:parentActivityName=".strawberry"
+            android:parentActivityName=".ExerciseListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.geoff.mytrainer.MainActivity" />
+                android:value=".ExerciseListActivity" />
         </activity>
 
 

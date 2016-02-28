@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
-import android.view.Gravity;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,12 +20,11 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class strawberry extends AppCompatActivity
+public class ExerciseListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private String[] exercises;
@@ -220,7 +218,7 @@ public class strawberry extends AppCompatActivity
     }
 
     public void buttonEdit(View view) {
-        Intent intent = new Intent(this, ExerciseEditor.class);
+        Intent intent = new Intent(this, ExerciseEditorActivity.class);
         intent.putExtra("message", "Hello from MainActivity!");
 
         startActivity(intent);

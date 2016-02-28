@@ -12,7 +12,7 @@ import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
-public class ExerciseEditor extends AppCompatActivity {
+public class ExerciseEditorActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
