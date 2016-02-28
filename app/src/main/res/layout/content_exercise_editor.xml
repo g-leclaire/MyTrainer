@@ -21,6 +21,7 @@
         <TextView
             android:id="@+id/text_exercise_name"
             android:text="Exercise name"
+            android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"/>
@@ -28,6 +29,7 @@
         <TextView
             android:id="@+id/text_weight"
             android:text="Weight"
+            android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
@@ -37,56 +39,72 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginBottom="20dp">
 
         <EditText
             android:id="@+id/edittext_exercise_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:layout_marginBottom="20sp"
+
             android:inputType="text"/>
 
         <EditText
             android:id="@+id/edittext_weight"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1.2"
+            android:layout_weight="1.4"
             android:inputType="numberDecimal"/>
 
         <Spinner
             android:id="@+id/spinner_units"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="0.8"/>
+            android:layout_weight="0.6"/>
 
     </LinearLayout>
 
     <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/text_sets"
-            android:text="Sets"
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:layout_marginRight="30dp"
+            android:layout_marginLeft="8dp" >
 
-        <TextView
-            android:id="@+id/text_repetitions"
-            android:text="Reps"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            <TextView
+                android:id="@+id/text_sets"
+                android:text="Sets"
+                android:textSize="18sp"
+                android:textAlignment="center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
+            <TextView
+                android:id="@+id/text_repetitions"
+                android:text="Reps"
+                android:textSize="18sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAlignment="center"/>
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/text_rest"
             android:text="Rest"
+            android:textSize="18sp"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="2"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
             android:textAlignment="center"/>
 
     </LinearLayout>
@@ -96,27 +114,46 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="horizontal"
-        android:layout_marginBottom="20sp">
+        android:layout_marginBottom="20dp">
 
         <NumberPicker
             android:id="@+id/numberpicker_sets"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_marginRight="10sp"/>
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp" />
 
         <NumberPicker
             android:id="@+id/numberpicker_reps"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="8dp" />
 
-        <TimePicker
-            android:id="@+id/timepicker_rest"
+        <NumberPicker
+            android:id="@+id/numberpicker_minutes"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:timePickerMode="spinner"
-            android:layout_weight="2"/>
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="15dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text=":"
+            android:gravity="center"/>
+
+        <NumberPicker
+            android:id="@+id/numberpicker_seconds"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="8dp" />
+
 
     </LinearLayout>
 
@@ -133,14 +170,16 @@
 
             <TextView
                 android:id="@+id/text_muscle1"
-                android:text="Main muscle group"
+                android:text="Main muscle"
+                android:textSize="18sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
 
             <TextView
                 android:id="@+id/text_muscle2"
-                android:text="Secondary muscle group"
+                android:text="Secondary muscle"
+                android:textSize="18sp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
@@ -150,16 +189,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:orientation="horizontal"
+            android:layout_marginBottom="20dp">
 
             <Spinner
 
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"/>
-
-
 
             <Spinner
 

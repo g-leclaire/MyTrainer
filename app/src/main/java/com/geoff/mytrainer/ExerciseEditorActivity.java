@@ -50,10 +50,10 @@ public class ExerciseEditorActivity extends AppCompatActivity {
         sets.setValue(3);
         sets.setEnabled(true);
 
-        TimePicker rest = (TimePicker) findViewById(R.id.timepicker_rest);
+        /*TimePicker rest = (TimePicker) findViewById(R.id.timepicker_rest);
         rest.setCurrentHour(1);
         rest.setCurrentMinute(30);
-        rest.setEnabled(true);
+        rest.setEnabled(true);*/
     }
 
     public void buttonSave(View view) {
