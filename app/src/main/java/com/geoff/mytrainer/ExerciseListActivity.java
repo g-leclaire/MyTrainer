@@ -159,9 +159,23 @@ public class ExerciseListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_workout1) {
-
+            currentWorkout = "Workout 1";
+            retrieveExercises();
+            makeRowItems();
+            // Get the list.
+            ListView list = (ListView) findViewById(R.id.list);
+            // Get the list adapter.
+            CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+            adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_workout2) {
-
+            currentWorkout = "Workout 2";
+            retrieveExercises();
+            makeRowItems();
+            // Get the list.
+            ListView list = (ListView) findViewById(R.id.list);
+            // Get the list adapter.
+            CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+            adapter.notifyDataSetChanged();
         } else if (id == R.id.nav_workoutlog) {
 
         } else if (id == R.id.nav_statistics) {
@@ -190,6 +204,7 @@ public class ExerciseListActivity extends AppCompatActivity
             sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
             mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
             secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+            currentWorkout = sharedPref.getString("currentWorkout", "error");
         }
     }
 
@@ -205,6 +220,7 @@ public class ExerciseListActivity extends AppCompatActivity
             editor.putString("rests", TextUtils.join(",", rests));
             editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
             editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
+            editor.putString("currentWorkout", currentWorkout);
             editor.apply();
         }
     }

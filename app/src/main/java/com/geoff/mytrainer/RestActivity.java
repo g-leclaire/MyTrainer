@@ -105,6 +105,7 @@ public class RestActivity extends TimerActivity{
             sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
             mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
             secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+            currentWorkout = sharedPref.getString("currentWorkout", "error");
         }
     }
 
@@ -120,6 +121,7 @@ public class RestActivity extends TimerActivity{
             editor.putString("rests", TextUtils.join(",", rests));
             editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
             editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
+            editor.putString("currentWorkout", currentWorkout);
             editor.apply();
         }
     }

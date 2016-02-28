@@ -31,6 +31,17 @@ public class MyApp extends Application {
         editor.putString("secondaryMuscles", "7,14,7");
         editor.apply();
 
+        sharedPref = getSharedPreferences("Workout 2", Context.MODE_PRIVATE);
+        editor = sharedPref.edit();
+        editor.putString("exercises", "Squat,Squat,Squat");
+        editor.putString("sets", "2,2,3");
+        editor.putString("reps", "8,9,8");
+        editor.putString("weights", "150,120,130");
+        editor.putString("rests", "30,60,90");
+        editor.putString("mainMuscles", "11,4,9");
+        editor.putString("secondaryMuscles", "7,14,7");
+        editor.apply();
+
         sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         editor.putString("currentWorkout", "Workout 1");
