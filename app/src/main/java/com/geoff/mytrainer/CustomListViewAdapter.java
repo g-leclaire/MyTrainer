@@ -52,4 +52,9 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
     public void remove(int position){
         remove(getItem(position));
     }
+
+    public void setRowItems(List<RowItem> rowItems){
+        clear();
+        addAll(rowItems);
+    }
 }

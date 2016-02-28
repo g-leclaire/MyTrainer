@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,23 +23,26 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ExerciseListActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String[] exercises;
-    private String[] weights;
-    private String[] reps;
-    private String[] sets;
-    private String[] rests;
+    private List<String> exercises;
+    private List<String> weights;
+    private List<String> reps;
+    private List<String> rests;
+    private List<String> sets;
+    private List<String> mainMuscles;
+    private List<String> secondaryMuscles;
 
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
     // TODO: Delete.
     public static final Integer[] images = { 0,0,0 };
 
-    private List<RowItem> rowItems;
+    private List<RowItem> rowItems = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +57,7 @@ public class ExerciseListActivity extends AppCompatActivity
             public void onClick(View view) {
                 // Start the exercise  editor with the exercise index as the number of exercises.
                 Intent intent = new Intent(getApplicationContext(), ExerciseEditorActivity.class);
-                intent.putExtra("exerciseIndex", exercises.length);
+                intent.putExtra("exerciseIndex", exercises.size());
                 startActivity(intent);
             }
         });
@@ -67,22 +71,9 @@ public class ExerciseListActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        /*SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
-        if (sharedPref != null && !sharedPref.getBoolean("hasBeenInitialized", false)) {
-            SharedPreferences.Editor editor = sharedPref.edit();
-            editor.putString("exercises", "Squat,Bench Press,Deadlift");
-            editor.putString("sets", "2,2,3");
-            editor.putString("reps", "8,9,8");
-            editor.putString("weights", "150,120,130");
-            editor.putString("rests", "30,60,90");
-            editor.putString("mainMuscles", "11,4,9");
-            editor.putString("secondaryMuscles", "7,14,7");
-            editor.putBoolean("hasBeenInitialized", true);
-            editor.apply();
-        }*/
-
         // Retrieve and set exercises info.
         retrieveExercises();
+        rowItems = makeRowItems();
 
         ListView listView = (ListView) findViewById(R.id.list);
         final CustomListViewAdapter adapter = new CustomListViewAdapter(this,
@@ -103,6 +94,7 @@ public class ExerciseListActivity extends AppCompatActivity
         super.onResume();  // Always call the superclass method first
 
         retrieveExercises();
+        rowItems = makeRowItems();
 
         final CustomListViewAdapter adapter = new CustomListViewAdapter(this,
                 R.layout.list_item, rowItems);
@@ -120,21 +112,33 @@ public class ExerciseListActivity extends AppCompatActivity
         }*/
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();  // Always call the superclass method first
+
+        //saveExercises();
+    }
+
     private void retrieveExercises()
     {
         SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
         // Retrieve and set exercises info.
-        exercises = sharedPref.getString("exercises", "error,").split(",");
-        weights = sharedPref.getString("weights", "error,").split(",");
-        reps = sharedPref.getString("reps", "error,").split(",");
-        rests = sharedPref.getString("rests", "error,").split(",");
-        sets = sharedPref.getString("sets", "error,").split(",");
+        exercises = new ArrayList<>( Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
+        weights = new ArrayList<>( Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
+        reps = new ArrayList<>( Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
+        rests = new ArrayList<>( Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
+        sets = new ArrayList<>( Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
+        mainMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
+        secondaryMuscles = new ArrayList<>( Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
+    }
 
-        rowItems = new ArrayList<>();
-        for (int i = 0; i < exercises.length; i++) {
-            RowItem item = new RowItem(images[i], exercises[i], sets[i] + " x " + reps[i] + " x " + weights[i] + " lb");
+    private List<RowItem> makeRowItems(){
+        rowItems.clear();
+        for (int i = 0; i < exercises.size(); i++) {
+            RowItem item = new RowItem(images[i], exercises.get(i), sets.get(i) + " x " + reps.get(i) + " x " + weights.get(i) + " lb");
             rowItems.add(item);
         }
+        return rowItems;
     }
 
     @Override
@@ -214,9 +218,10 @@ public class ExerciseListActivity extends AppCompatActivity
     }
 
     public void buttonStart(View view) {
+        saveExercises();
+
         Intent intent = new Intent(this, RestActivity.class);
         intent.putExtra("message", "Hello from MainActivity!");
-
         startActivity(intent);
     }
 
@@ -273,11 +278,47 @@ public class ExerciseListActivity extends AppCompatActivity
 
         if (position > 0) {
             // Get the item.
-            RowItem item = adapter.getItem(position);
+            //RowItem item = adapter.getItem(position);
             // Remove the item from the adapter.
-            adapter.remove(item);
+            //adapter.remove(item);
             // Reinsert the item at the right position.
-            adapter.insert(item, position - 1);
+            //adapter.insert(item, position - 1);
+
+
+            // TODO: modify data
+            String tmp;
+
+            tmp = exercises.get(position);
+            exercises.remove(position);
+            exercises.add(position - 1, tmp);
+
+            tmp = reps.get(position);
+            reps.remove(position);
+            reps.add(position - 1, tmp);
+
+            tmp = sets.get(position);
+            sets.remove(position);
+            sets.add(position - 1, tmp);
+
+            tmp = weights.get(position);
+            weights.remove(position);
+            weights.add(position - 1, tmp);
+
+            tmp = rests.get(position);
+            rests.remove(position);
+            rests.add(position - 1, tmp);
+
+            tmp = mainMuscles.get(position);
+            mainMuscles.remove(position);
+            mainMuscles.add(position - 1, tmp);
+
+            tmp = secondaryMuscles.get(position);
+            secondaryMuscles.remove(position);
+            secondaryMuscles.add(position - 1, tmp);
+
+            makeRowItems();
+            adapter.notifyDataSetChanged();
+
             // Hide all the items options.
             hideItemsOptions(list);
             // Get the new item view
@@ -285,7 +326,22 @@ public class ExerciseListActivity extends AppCompatActivity
             // Show the item options.
             showItemOptions(newView);
         }
-        // TODO: modify data
+    }
+
+    public void saveExercises(){
+        // Save the data.
+        SharedPreferences sharedPref = getSharedPreferences("Exercises", Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putString("exercises", TextUtils.join(",", exercises));
+            editor.putString("sets", TextUtils.join(",", sets));
+            editor.putString("reps", TextUtils.join(",", reps));
+            editor.putString("weights", TextUtils.join(",", weights));
+            editor.putString("rests", TextUtils.join(",", rests));
+            editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
+            editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
+            editor.apply();
+        }
     }
 
     public void buttonDown(View view) {
@@ -298,18 +354,62 @@ public class ExerciseListActivity extends AppCompatActivity
 
         if (position < list.getCount() - 1) {
             // Get the item.
-            RowItem item = adapter.getItem(position);
+            //RowItem item = adapter.getItem(position);
             // Remove the item from the adapter.
-            adapter.remove(item);
+            //RowItem item = rowItems.get(position);
+            //rowItems.remove(position);
+            //rowItems.add(position + 1, item);
+            //adapter.notifyDataSetChanged();
+
+            // TODO: modify data
+            String tmp;
+
+            tmp = exercises.get(position);
+            exercises.remove(position);
+            exercises.add(position + 1, tmp);
+
+            tmp = reps.get(position);
+            reps.remove(position);
+            reps.add(position + 1, tmp);
+
+            tmp = sets.get(position);
+            sets.remove(position);
+            sets.add(position + 1, tmp);
+
+            tmp = weights.get(position);
+            weights.remove(position);
+            weights.add(position + 1, tmp);
+
+            tmp = rests.get(position);
+            rests.remove(position);
+            rests.add(position + 1, tmp);
+
+            tmp = mainMuscles.get(position);
+            mainMuscles.remove(position);
+            mainMuscles.add(position + 1, tmp);
+
+            tmp = secondaryMuscles.get(position);
+            secondaryMuscles.remove(position);
+            secondaryMuscles.add(position + 1, tmp);
+
+            makeRowItems();
+            adapter.notifyDataSetChanged();
+
+
             // Reinsert the item at the right position.
-            adapter.insert(item, position + 1);
+            //adapter.insert(item, position + 1);
             // Hide all the items options.
             hideItemsOptions(list);
             // Get the new item view
             View newView = list.getChildAt(position + 1);
             // Show the item options.
             showItemOptions(newView);
+
+            //rowItems.add(new RowItem(images[0], exercises.get(0), sets.get(0) + " x " + reps.get(0) + " x " + weights.get(0) + " lb"));
+            //adapter.notifyDataSetChanged();
+
+
         }
-        // TODO: modify data
+
     }
 }
