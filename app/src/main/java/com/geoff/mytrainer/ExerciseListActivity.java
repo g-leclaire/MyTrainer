@@ -195,6 +195,8 @@ public class ExerciseListActivity extends AppCompatActivity
     }
 
     private void changeWorkout(String workout){
+        saveExercises();
+
         currentWorkout = workout;
         SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
@@ -214,6 +216,9 @@ public class ExerciseListActivity extends AppCompatActivity
         // Set the title.
         TextView title = (TextView) findViewById(R.id.text_workout_name);
         title.setText(currentWorkout);
+
+        // Hide the items options.
+        hideItemsOptions((ListView) findViewById(R.id.list));
     }
 
     private void retrieveExercises()

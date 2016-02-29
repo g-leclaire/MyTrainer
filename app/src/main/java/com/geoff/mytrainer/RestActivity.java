@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -58,6 +60,7 @@ public class RestActivity extends TimerActivity{
         repsPicker.setMinValue(0);
         repsPicker.setValue(8);
         repsPicker.setWrapSelectorWheel(false);
+        repsPicker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
         //numberPicker.setOnValueChangedListener(this);
 
 
@@ -134,6 +137,14 @@ public class RestActivity extends TimerActivity{
     }
 
     public void timerFinished() {
+        Context context = getApplicationContext();
+        CharSequence text = "Go!";
+        int duration = Toast.LENGTH_SHORT;
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+        Vibrator vib = (Vibrator) getSystemService(VIBRATOR_SERVICE);
+        vib.vibrate(225);
 
         switchToRepsPicker();
     }

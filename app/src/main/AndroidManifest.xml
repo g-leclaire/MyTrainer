@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.geoff.mytrainer">
-
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -9,6 +9,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light">
+
 
         <activity
             android:name=".ExerciseListActivity"

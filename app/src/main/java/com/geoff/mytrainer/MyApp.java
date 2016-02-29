@@ -23,8 +23,8 @@ public class MyApp extends Application {
         SharedPreferences sharedPref = getSharedPreferences("Workout 1", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString("exercises", "Squat,Bench Press,Deadlift");
-        editor.putString("sets", "2,2,3");
-        editor.putString("reps", "8,9,8");
+        editor.putString("sets", "2,1,2");
+        editor.putString("reps", "8,5,8");
         editor.putString("weights", "150,120,130");
         editor.putString("rests", "30,60,90");
         editor.putString("mainMuscles", "11,4,9");
@@ -38,8 +38,8 @@ public class MyApp extends Application {
         editor.putString("reps", "5,5,3,12");
         editor.putString("weights", "120,170,115,10");
         editor.putString("rests", "45,60,60,30");
-        editor.putString("mainMuscles", "11,4,9,11");
-        editor.putString("secondaryMuscles", "7,14,7,");
+        editor.putString("mainMuscles", "0,0,0,0");
+        editor.putString("secondaryMuscles", "0,0,0,0");
         editor.apply();
 
         sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
