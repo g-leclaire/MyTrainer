@@ -66,7 +66,7 @@ public class RestActivity extends TimerActivity{
 
         // Start the workout.
         nextExercise();
-        timerFinished();
+        restTimer.complete();
     }
 
     @Override
