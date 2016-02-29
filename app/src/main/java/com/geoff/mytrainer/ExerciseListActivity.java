@@ -40,6 +40,7 @@ public class ExerciseListActivity extends AppCompatActivity
     private List<String> mainMuscles;
     private List<String> secondaryMuscles;
     private String currentWorkout;
+    private boolean firstTime = true;
 
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
@@ -74,6 +75,11 @@ public class ExerciseListActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        if (firstTime) {
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(false);
+            firstTime = false;
+        }
 
         // Retrieve and set exercises info.
         retrieveExercises();
@@ -111,15 +117,7 @@ public class ExerciseListActivity extends AppCompatActivity
 
         // TODO: Make dynamic.
         // Set the selected workout in the drawer.
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (currentWorkout.equals("Workout 1")) {
-            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
-            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(false);
-        }
-        else if (currentWorkout.equals("Workout 2")){
-            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(false);
-            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(true);
-        }
+
 
         // TODO: Do.
         // If an exercise was saved, show message.
@@ -198,6 +196,17 @@ public class ExerciseListActivity extends AppCompatActivity
         saveExercises();
 
         currentWorkout = workout;
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (currentWorkout.equals("Workout 1")) {
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(false);
+        }
+        else if (currentWorkout.equals("Workout 2")){
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(false);
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(true);
+        }
+
         SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor;
         if (sharedPref != null) {
@@ -218,7 +227,7 @@ public class ExerciseListActivity extends AppCompatActivity
         title.setText(currentWorkout);
 
         // Hide the items options.
-        hideItemsOptions((ListView) findViewById(R.id.list));
+        //hideItemsOptions((ListView) findViewById(R.id.list)); // TODO: Fix bug.
     }
 
     private void retrieveExercises()
