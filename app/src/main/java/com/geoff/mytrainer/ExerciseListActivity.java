@@ -44,7 +44,7 @@ public class ExerciseListActivity extends AppCompatActivity
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
 
     // TODO: Delete.
-    public static final Integer[] images = { 0,0,0 };
+    public static final Integer[] images = { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
 
     private List<RowItem> rowItems = new ArrayList<>();
 
@@ -109,12 +109,17 @@ public class ExerciseListActivity extends AppCompatActivity
         TextView title = (TextView) findViewById(R.id.text_workout_name);
         title.setText(currentWorkout);
 
+        // TODO: Make dynamic.
         // Set the selected workout in the drawer.
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        if (currentWorkout.equals("Workout 1")) // TODO: Make dynamic.
+        if (currentWorkout.equals("Workout 1")) {
             navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
-        else if (currentWorkout.equals("Workout 2"))
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(false);
+        }
+        else if (currentWorkout.equals("Workout 2")){
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(false);
             navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(true);
+        }
 
         // TODO: Do.
         // If an exercise was saved, show message.
