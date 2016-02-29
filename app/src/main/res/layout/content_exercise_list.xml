@@ -23,7 +23,8 @@
             android:orientation="horizontal" >
 
             <TextView
-                android:text="Workout 1"
+                android:id="@+id/text_workout_name"
+                android:text="Workout name"
                 android:textSize="30sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

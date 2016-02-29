@@ -93,7 +93,8 @@ public class RestActivity extends TimerActivity{
     private void retrieveExercises()
     {
         SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
-        currentWorkout = sharedPref.getString("currentWorkout", "error");
+        if (sharedPref != null)
+            currentWorkout = sharedPref.getString("currentWorkout", "error");
 
         sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
         // Retrieve and set exercises info.
@@ -105,15 +106,21 @@ public class RestActivity extends TimerActivity{
             sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
             mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
             secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
-            currentWorkout = sharedPref.getString("currentWorkout", "error");
         }
     }
 
     public void saveExercises(){
-        // Save the data.
-        SharedPreferences sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
         if (sharedPref != null) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+            editor = sharedPref.edit();
+            editor.putString("currentWorkout", currentWorkout);
+            editor.apply();
+        }
+
+        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            editor = sharedPref.edit();
             editor.putString("exercises", TextUtils.join(",", exercises));
             editor.putString("sets", TextUtils.join(",", sets));
             editor.putString("reps", TextUtils.join(",", reps));
@@ -121,7 +128,6 @@ public class RestActivity extends TimerActivity{
             editor.putString("rests", TextUtils.join(",", rests));
             editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
             editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
-            editor.putString("currentWorkout", currentWorkout);
             editor.apply();
         }
     }

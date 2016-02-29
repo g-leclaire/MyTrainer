@@ -1,5 +1,6 @@
 package com.geoff.mytrainer;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -9,6 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -21,6 +23,7 @@ import android.view.MenuItem;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -102,6 +105,17 @@ public class ExerciseListActivity extends AppCompatActivity
         ListView listView = (ListView) findViewById(R.id.list);
         listView.setAdapter(adapter);
 
+        // Set the title.
+        TextView title = (TextView) findViewById(R.id.text_workout_name);
+        title.setText(currentWorkout);
+
+        // Set the selected workout in the drawer.
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        if (currentWorkout.equals("Workout 1")) // TODO: Make dynamic.
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(0).setChecked(true);
+        else if (currentWorkout.equals("Workout 2"))
+            navigationView.getMenu().getItem(0).getSubMenu().getItem(1).setChecked(true);
+
         // TODO: Do.
         // If an exercise was saved, show message.
         /*Bundle extras = getIntent().getExtras();
@@ -159,23 +173,9 @@ public class ExerciseListActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_workout1) {
-            currentWorkout = "Workout 1";
-            retrieveExercises();
-            makeRowItems();
-            // Get the list.
-            ListView list = (ListView) findViewById(R.id.list);
-            // Get the list adapter.
-            CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
-            adapter.notifyDataSetChanged();
+            changeWorkout("Workout 1"); // TODO: Make dynamic.
         } else if (id == R.id.nav_workout2) {
-            currentWorkout = "Workout 2";
-            retrieveExercises();
-            makeRowItems();
-            // Get the list.
-            ListView list = (ListView) findViewById(R.id.list);
-            // Get the list adapter.
-            CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
-            adapter.notifyDataSetChanged();
+            changeWorkout("Workout 2");
         } else if (id == R.id.nav_workoutlog) {
 
         } else if (id == R.id.nav_statistics) {
@@ -189,10 +189,33 @@ public class ExerciseListActivity extends AppCompatActivity
         return true;
     }
 
+    private void changeWorkout(String workout){
+        currentWorkout = workout;
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
+        if (sharedPref != null) {
+            editor = sharedPref.edit();
+            editor.putString("currentWorkout", currentWorkout);
+            editor.apply();
+        }
+        retrieveExercises();
+        makeRowItems();
+        // Get the list.
+        ListView list = (ListView) findViewById(R.id.list);
+        // Get the list adapter.
+        CustomListViewAdapter adapter = (CustomListViewAdapter) list.getAdapter();
+        adapter.notifyDataSetChanged();
+
+        // Set the title.
+        TextView title = (TextView) findViewById(R.id.text_workout_name);
+        title.setText(currentWorkout);
+    }
+
     private void retrieveExercises()
     {
         SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
-        currentWorkout = sharedPref.getString("currentWorkout", "error");
+        if (sharedPref != null)
+            currentWorkout = sharedPref.getString("currentWorkout", "error");
 
         sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
         // Retrieve and set exercises info.
@@ -204,15 +227,21 @@ public class ExerciseListActivity extends AppCompatActivity
             sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
             mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
             secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
-            currentWorkout = sharedPref.getString("currentWorkout", "error");
         }
     }
 
     public void saveExercises(){
-        // Save the data.
-        SharedPreferences sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor;
         if (sharedPref != null) {
-            SharedPreferences.Editor editor = sharedPref.edit();
+            editor = sharedPref.edit();
+            editor.putString("currentWorkout", currentWorkout);
+            editor.apply();
+        }
+
+        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            editor = sharedPref.edit();
             editor.putString("exercises", TextUtils.join(",", exercises));
             editor.putString("sets", TextUtils.join(",", sets));
             editor.putString("reps", TextUtils.join(",", reps));
@@ -220,7 +249,6 @@ public class ExerciseListActivity extends AppCompatActivity
             editor.putString("rests", TextUtils.join(",", rests));
             editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
             editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
-            editor.putString("currentWorkout", currentWorkout);
             editor.apply();
         }
     }
