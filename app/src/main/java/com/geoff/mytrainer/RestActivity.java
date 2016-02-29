@@ -66,6 +66,7 @@ public class RestActivity extends TimerActivity{
 
         // Start the workout.
         nextExercise();
+        timerFinished();
     }
 
     @Override
@@ -144,6 +145,7 @@ public class RestActivity extends TimerActivity{
 
         // Show reps picker.
         NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        //repsPicker.setValue(Integer.getInteger(reps.get(currentExercise))); // TODO: Fix.
         repsPicker.setVisibility(View.VISIBLE);
 
         // Show reps picker instructions.
@@ -164,13 +166,13 @@ public class RestActivity extends TimerActivity{
         TextView timerText = (TextView) findViewById(R.id.timer_text);
         timerText.setVisibility(View.VISIBLE);
 
-        // Hide reps picker.
-        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
-        repsPicker.setVisibility(View.GONE);
-
         // Hide reps picker instructions.
         TextView repsInstructions = (TextView) findViewById(R.id.text_reps_instructions);
         repsInstructions.setVisibility(View.GONE);
+
+        // Hide reps picker.
+        NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+        repsPicker.setVisibility(View.GONE);
 
         // Show skip button.
         Button skipButton = (Button) findViewById(R.id.button_skip);
