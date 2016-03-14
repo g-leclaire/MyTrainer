@@ -22,7 +22,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".RestActivity"
+            android:name=".ExerciseRestActivity"
             android:label="@string/title_activity_display_message"
             android:parentActivityName=".ExerciseListActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">

@@ -1,16 +1,13 @@
 package com.geoff.mytrainer;
 
-import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
-import android.view.SubMenu;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -29,17 +26,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExerciseListActivity extends AppCompatActivity
+public class ExerciseListActivity extends ExerciseActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private List<String> exercises;
-    private List<String> weights;
-    private List<String> reps;
-    private List<String> rests;
-    private List<String> sets;
-    private List<String> mainMuscles;
-    private List<String> secondaryMuscles;
-    private String currentWorkout;
     private boolean firstTime = true;
 
     public final static String EXTRA_MESSAGE = "com.geoff.myTrainer.MESSAGE";
@@ -230,48 +219,6 @@ public class ExerciseListActivity extends AppCompatActivity
         //hideItemsOptions((ListView) findViewById(R.id.list)); // TODO: Fix bug.
     }
 
-    private void retrieveExercises()
-    {
-        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
-        if (sharedPref != null)
-            currentWorkout = sharedPref.getString("currentWorkout", "error");
-
-        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
-        // Retrieve and set exercises info.
-        if (sharedPref != null) {
-            exercises = new ArrayList<>(Arrays.asList(sharedPref.getString("exercises", "error,").split(",")));
-            weights = new ArrayList<>(Arrays.asList(sharedPref.getString("weights", "error,").split(",")));
-            reps = new ArrayList<>(Arrays.asList(sharedPref.getString("reps", "error,").split(",")));
-            rests = new ArrayList<>(Arrays.asList(sharedPref.getString("rests", "error,").split(",")));
-            sets = new ArrayList<>(Arrays.asList(sharedPref.getString("sets", "error,").split(",")));
-            mainMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("mainMuscles", "error,").split(",")));
-            secondaryMuscles = new ArrayList<>(Arrays.asList(sharedPref.getString("secondaryMuscles", "error,").split(",")));
-        }
-    }
-
-    public void saveExercises(){
-        SharedPreferences sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor;
-        if (sharedPref != null) {
-            editor = sharedPref.edit();
-            editor.putString("currentWorkout", currentWorkout);
-            editor.apply();
-        }
-
-        sharedPref = getSharedPreferences(currentWorkout, Context.MODE_PRIVATE);
-        if (sharedPref != null) {
-            editor = sharedPref.edit();
-            editor.putString("exercises", TextUtils.join(",", exercises));
-            editor.putString("sets", TextUtils.join(",", sets));
-            editor.putString("reps", TextUtils.join(",", reps));
-            editor.putString("weights", TextUtils.join(",", weights));
-            editor.putString("rests", TextUtils.join(",", rests));
-            editor.putString("mainMuscles", TextUtils.join(",", mainMuscles));
-            editor.putString("secondaryMuscles", TextUtils.join(",", secondaryMuscles));
-            editor.apply();
-        }
-    }
-
     private List<RowItem> makeRowItems(){
         rowItems.clear();
         for (int i = 0; i < exercises.size(); i++) {
@@ -303,7 +250,7 @@ public class ExerciseListActivity extends AppCompatActivity
     public void buttonStart(View view) {
         saveExercises();
 
-        Intent intent = new Intent(this, RestActivity.class);
+        Intent intent = new Intent(this, ExerciseRestActivity.class);
         intent.putExtra("message", "Hello from MainActivity!");
         startActivity(intent);
     }
