@@ -271,8 +271,19 @@ public class ExerciseListActivity extends ExerciseActivity
                 .setMessage("Delete " + item.getTitle() + " exercise?")
                 .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
+                        // TODO: Remove code repetition (other buttons)
                         // Remove the item from the adapter.
-                        adapter.remove(position);
+                        exercises.remove(position);
+                        reps.remove(position);
+                        sets.remove(position);
+                        weights.remove(position);
+                        rests.remove(position);
+                        mainMuscles.remove(position);
+                        secondaryMuscles.remove(position);
+
+                        makeRowItems();
+                        adapter.notifyDataSetChanged();
+
                         // Hide all the items options.
                         hideItemsOptions(list);
                     }

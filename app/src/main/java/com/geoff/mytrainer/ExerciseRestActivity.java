@@ -14,9 +14,13 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.TreeSet;
+
 
 public class ExerciseRestActivity extends ExerciseActivity implements TimerActivity {
 
@@ -24,11 +28,13 @@ public class ExerciseRestActivity extends ExerciseActivity implements TimerActiv
     private int nbExercises;
     private int currentExercise;
     private int currentSet;
+    private String actualReps;
 
     public ExerciseRestActivity() {
         nbExercises = 0;
         currentExercise = 0;
         currentSet = 1;
+        actualReps = "";
     }
 
     @Override
@@ -58,6 +64,14 @@ public class ExerciseRestActivity extends ExerciseActivity implements TimerActiv
 
         // Create the timer object.
         this.restTimer = new RestTimer(this, (TextView) findViewById(R.id.timer_text), (ProgressBar) findViewById(R.id.progressBar));
+
+        // Temporary: Clear the exercises
+        SharedPreferences sharedPref = getSharedPreferences("WorkoutLog", Context.MODE_PRIVATE);
+        if (sharedPref != null) {
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putStringSet("exercises", new HashSet<String>());
+            editor.apply();
+        }
 
         // Start the workout.
         nextExercise();
@@ -145,6 +159,7 @@ public class ExerciseRestActivity extends ExerciseActivity implements TimerActiv
     }
 
     private void nextExercise() {
+
         if(currentExercise < nbExercises)
         {
             final TextView exerciseName = (TextView) findViewById(R.id.exercise_name);
@@ -185,7 +200,56 @@ public class ExerciseRestActivity extends ExerciseActivity implements TimerActiv
     }
 
     public void nextButton(View view) {
+        logExercise();
         nextExercise();
+    }
+
+    private void logExercise() {
+        if (currentExercise > 0) {
+            String exercise = "";
+
+            // Get the date and time.
+            Date date = new Date();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // Complete format : "yyyy-MM-dd HH:mm:ss"
+            exercise += dateFormat.format(date);
+            exercise += ",";
+
+            // Get the exercise name.
+            exercise += exercises.get(currentExercise - 1);
+            exercise += ",";
+
+            // Get the weight.
+            exercise += weights.get(currentExercise - 1);
+            exercise += ",";
+
+            // Get the reps.
+            NumberPicker repsPicker = (NumberPicker) findViewById(R.id.reps_picker);
+            exercise += repsPicker.getValue();
+            //exercise += ",";
+
+            // TODO: Get the rest time.
+            // Get the rest.
+            //exercise += rests.get(currentExercise);
+
+            //
+            SharedPreferences sharedPref = getSharedPreferences("WorkoutLog", Context.MODE_PRIVATE);
+            HashSet<String> exercises = (HashSet<String>) sharedPref.getStringSet("exercises", new HashSet<String>());
+            exercises.add(exercise);
+
+            // Test.
+            //Context context = getApplicationContext();
+            //int duration = Toast.LENGTH_LONG;
+            //Toast toast = Toast.makeText(context, exercise, duration);
+            //toast.show();
+
+            // Save the result.
+            SharedPreferences.Editor editor;
+            if (sharedPref != null) {
+                editor = sharedPref.edit();
+                editor.putStringSet("exercises", exercises);
+                editor.apply();
+            }
+        }
     }
 }
 
