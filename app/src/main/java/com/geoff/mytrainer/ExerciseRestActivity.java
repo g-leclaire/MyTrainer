@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class ExerciseRestActivity extends TimerActivity{
+public class ExerciseRestActivity extends ExerciseActivity implements TimerActivity {
 
     private RestTimer restTimer;
     private int nbExercises;
