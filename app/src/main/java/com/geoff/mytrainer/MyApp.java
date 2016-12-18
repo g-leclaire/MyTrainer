@@ -34,7 +34,7 @@ public class MyApp extends Application {
         // Create a new map of values, where column names are the keys
         ContentValues testExercise = new ContentValues();
         testExercise.put(DatabaseContract.Exercise.NAME, "Test Exercise");
-        testExercise.put(DatabaseContract.Exercise.WEIGHT, 69);
+        testExercise.put(DatabaseContract.Exercise.WEIGHT, 169);
         testExercise.put(DatabaseContract.Exercise.REPETITIONS, 10);
         testExercise.put(DatabaseContract.Exercise.SETS, 3);
         testExercise.put(DatabaseContract.Exercise.REST, 120);
@@ -82,6 +82,7 @@ public class MyApp extends Application {
         final int lExerciseReps = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Exercise.REPETITIONS));
         final int lExerciseSets = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Exercise.SETS));
         final int lExerciseRest = cursor.getInt(cursor.getColumnIndexOrThrow(DatabaseContract.Exercise.REST));
+        cursor.close();
 
         SharedPreferences sharedPref = getSharedPreferences("Workout 1", Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
