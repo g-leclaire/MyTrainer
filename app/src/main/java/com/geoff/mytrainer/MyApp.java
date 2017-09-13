@@ -23,7 +23,7 @@ public class MyApp extends Application {
         // this method fires once as well as constructor
         // but also application has context here
 
-        DatabaseHelper mDbHelper = new DatabaseHelper(this);
+        /*DatabaseHelper mDbHelper = new DatabaseHelper(this);
 
         // Gets the data repository in write mode
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
@@ -108,6 +108,6 @@ public class MyApp extends Application {
         sharedPref = getSharedPreferences("WorkoutInformation", Context.MODE_PRIVATE);
         editor = sharedPref.edit();
         editor.putString("currentWorkout", "Workout 1");
-        editor.apply();
+        editor.apply();*/
     }
 }
